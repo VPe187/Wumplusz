@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="wumplusz:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/wumplusz_jar</output-path>
+    <root id="archive" name="wumplusz.jar">
+      <element id="module-output" name="wumplusz" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/indvd00m/ascii/render/ascii-render/2.2.0/ascii-render-2.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/indvd00m/ascii/render/ascii-render-api/2.2.0/ascii-render-api-2.2.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
