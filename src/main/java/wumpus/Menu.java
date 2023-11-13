@@ -11,7 +11,7 @@ public class Menu {
     String userName;
 
     public Menu() {
-        menuItems = new ArrayList<MenuItem>();
+        menuItems = new ArrayList<>();
     }
 
     public void addItem(MenuItem menuItem) {

@@ -68,7 +68,6 @@ public class World {
     }
 
     static int integerFromLetter(char letter) {
-        int number = 0;
         for (int i = 0; i <= alphabet.length(); i++) {
             if (alphabet.charAt(i) == letter) {
                 return i + 1;
@@ -130,7 +129,7 @@ public class World {
         }
         for (int i = 0; i < this.worldSize; i++) {
             for (int j = 0; j < this.worldSize; j++) {
-                table.setElement(1, j + 2, new Label(" " + Integer.toString(j + 1)), false);
+                table.setElement(1, j + 2, new Label(" " + (j + 1)), false);
                 if (this.worldTable.getCellValue(j, i).equalsIgnoreCase("G")) {
                     table.setElement(j + 2, i + 2, new Label(" " + this.worldTable.getCellValue(j, i)), true);
                 } else {

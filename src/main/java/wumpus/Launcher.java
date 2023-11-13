@@ -1,7 +1,5 @@
 package wumpus;
 
-import java.io.IOException;
-
 import com.indvd00m.ascii.render.Render;
 import com.indvd00m.ascii.render.api.ICanvas;
 import com.indvd00m.ascii.render.api.IContextBuilder;
@@ -15,7 +13,7 @@ public class Launcher {
     /**
      * Entry point.
      */
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         welcomeText();
         World world = new World();
         world.renderWorld();
