@@ -12,6 +12,7 @@ import com.indvd00m.ascii.render.elements.PseudoText;
 public class Launcher {
     public static void main(String[] args) {
         welcomeText();
+        World world = new World();
     }
 
     private static void welcomeText() {

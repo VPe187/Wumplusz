@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class WorldTest {
+    private World underTest;
+
     @BeforeEach
     void setup() {
     }
@@ -12,7 +14,7 @@ class WorldTest {
     @Test
     public void testNewWorldSizeWithCorrectSize() {
         // given
-        World underTest = new World(14);
+        underTest = new World(14);
         // when
         int result = underTest.getWorldSize();
         // then
@@ -22,7 +24,7 @@ class WorldTest {
     @Test
     public void testNewWorldSizeWithBiggerThanLimit() {
         // given
-        World underTest = new World(32);
+        underTest = new World(32);
         // when
         int result = underTest.getWorldSize();
         // then
@@ -32,7 +34,7 @@ class WorldTest {
     @Test
     public void testNewWorldSizeWithSmallerThanLimit() {
         // given
-        World underTest = new World(2);
+        underTest = new World(2);
         // when
         int result = underTest.getWorldSize();
         // then
@@ -42,7 +44,7 @@ class WorldTest {
     @Test
     public void testNewWorldSizeWithNegativeNumber() {
         // given
-        World underTest = new World(-2);
+        underTest = new World(-2);
         // when
         int result = underTest.getWorldSize();
         // then
@@ -52,7 +54,7 @@ class WorldTest {
     @Test
     public void testWumpusCountOneBelowLimit() {
         // given
-        World underTest = new World(7);
+        underTest = new World(7);
         // when
         int result = underTest.getWumpusCount();
         // then
@@ -62,7 +64,7 @@ class WorldTest {
     @Test
     public void testWumpusCountOneEqualLimit() {
         // given
-        World underTest = new World(8);
+        underTest = new World(8);
         // when
         int result = underTest.getWumpusCount();
         // then
@@ -72,7 +74,7 @@ class WorldTest {
     @Test
     public void testWumpusCountTwoBetweenLimits() {
         // given
-        World underTest = new World(12);
+        underTest = new World(12);
         // when
         int result = underTest.getWumpusCount();
         // then
@@ -82,7 +84,7 @@ class WorldTest {
     @Test
     public void testWumpusCountTwoEqualLowerLimits() {
         // given
-        World underTest = new World(9);
+        underTest = new World(9);
         // when
         int result = underTest.getWumpusCount();
         // then
@@ -92,7 +94,7 @@ class WorldTest {
     @Test
     public void testWumpusCountTwoEqualHigherLimits() {
         // given
-        World underTest = new World(14);
+        underTest = new World(14);
         // when
         int result = underTest.getWumpusCount();
         // then
@@ -102,7 +104,7 @@ class WorldTest {
     @Test
     public void testWumpusCountThreeOverLastLimit() {
         // given
-        World underTest = new World(15);
+        underTest = new World(15);
         // when
         int result = underTest.getWumpusCount();
         // then
@@ -112,12 +114,41 @@ class WorldTest {
     @Test
     public void testWumpusCountThreeOverWorldLimit() {
         // given
-        World underTest = new World(22);
+        underTest = new World(22);
         // when
         int result = underTest.getWumpusCount();
         // then
         Assertions.assertEquals(result, 3);
     }
 
+    @Test
+    public void testIntegerFromLetterA() {
+        // given
+        underTest = new World(8);
+        // when
+        int result = World.integerFromLetter('A');
+        // then
+        Assertions.assertEquals(result, 1);
+    }
+
+    @Test
+    public void testIntegerFromLetterB() {
+        // given
+        underTest = new World(8);
+        // when
+        int result = World.integerFromLetter('B');
+        // then
+        Assertions.assertEquals(result, 2);
+    }
+
+    @Test
+    public void testIntegerFromLetterT() {
+        // given
+        underTest = new World(12);
+        // when
+        int result = World.integerFromLetter('T');
+        // then
+        Assertions.assertEquals(result, 20);
+    }
 
 }
