@@ -19,7 +19,7 @@ public class World {
     private int worldSize;
     private int heroColumn;
     private int heroRow;
-    private Cell[][] worldTable;
+    private WorldTable worldTable;
     private final int wumpusCount;
 
     public World() {
@@ -30,17 +30,8 @@ public class World {
 
     public World(int worldSize) {
         this.setWorldSize(worldSize);
-        initWorldTable();
+        this.worldTable = new WorldTable(this.worldSize);
         this.wumpusCount = wumpusCountByWorldSize(this.worldSize);
-    }
-
-    private void initWorldTable() {
-        this.worldTable = new Cell[this.worldSize][this.worldSize];
-        for (int i = 0; i < this.worldSize; i++) {
-            for (int j = 0; j < this.worldSize; j++) {
-                this.worldTable[j][i] = new Cell();
-            }
-        }
     }
 
     /**
@@ -92,12 +83,12 @@ public class World {
             this.worldSize = Integer.parseInt(parameters[0]);
             this.heroColumn = integerFromLetter(parameters[1].charAt(0));
             this.heroRow = Integer.parseInt(parameters[2]);
-            initWorldTable();
+            worldTable = new WorldTable(this.worldSize);
             int row = 0;
             while (textFileBReader.ready()) {
                 String line = textFileBReader.readLine();
                 for (int j = 0; j < this.worldSize; j++) {
-                    this.worldTable[j][row].setCellValue(line.charAt(j));
+                    this.worldTable.setCellValue(j, row, line.charAt(j));
                     //System.out.print(line.charAt(j));
                 }
                 //System.out.println();
@@ -124,7 +115,7 @@ public class World {
         System.out.println(this.worldSize + " " + this.heroRow + " " + this.heroColumn);
         for (int i = 0; i < this.worldSize; i++) {
             for (int j = 0; j < this.worldSize; j++) {
-                System.out.print(this.worldTable[j][i].getCellValue());
+                System.out.print(this.worldTable.getCellValue(j, i));
             }
             System.out.println();
         }
