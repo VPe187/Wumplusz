@@ -59,6 +59,7 @@ class WorldTest {
         Assertions.assertEquals(result, 1);
     }
 
+    @Test
     public void testWumpusCountOneEqualLimit() {
         // given
         World underTest = new World(8);
