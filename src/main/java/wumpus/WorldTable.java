@@ -19,11 +19,11 @@ public class WorldTable {
         }
     }
 
-    public void setCellValue(int row, int col, char value) {
+    public void setCellValue(int row, int col, String value) {
         this.cells[row][col].setCellValue(value);
     }
 
-    public char getCellValue(int row, int col) {
+    public String getCellValue(int row, int col) {
         return this.cells[row][col].getCellValue();
     }
 }

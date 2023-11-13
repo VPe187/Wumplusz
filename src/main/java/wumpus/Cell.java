@@ -5,17 +5,17 @@ package wumpus;
  */
 public class Cell {
 
-    private char value;
+    private String value;
 
     public Cell() {
-        this.value = '_';
+        this.value = "_";
     }
 
-    public void setCellValue(char value) {
+    public void setCellValue(String value) {
         this.value = value;
     }
 
-    public char getCellValue() {
+    public String getCellValue() {
         return this.value;
     }
 

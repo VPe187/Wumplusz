@@ -1,9 +1,16 @@
 package wumpus;
 
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Objects;
+import java.util.Scanner;
+
+import com.indvd00m.ascii.render.Render;
+import com.indvd00m.ascii.render.api.ICanvas;
+import com.indvd00m.ascii.render.api.IContextBuilder;
+import com.indvd00m.ascii.render.api.IRender;
+import com.indvd00m.ascii.render.elements.Label;
+import com.indvd00m.ascii.render.elements.Table;
 
 /**
  * World class used to store Wumpus world.
@@ -19,13 +26,15 @@ public class World {
     private int worldSize;
     private int heroColumn;
     private int heroRow;
+    private String heroSight;
     private WorldTable worldTable;
     private final int wumpusCount;
+    private String userName;
 
     public World() {
         this.loadWorldFromFile();
         this.wumpusCount = wumpusCountByWorldSize(this.worldSize);
-        renderWorld();
+        //renderWorld();
     }
 
     public World(int worldSize) {
@@ -83,18 +92,18 @@ public class World {
             this.worldSize = Integer.parseInt(parameters[0]);
             this.heroColumn = integerFromLetter(parameters[1].charAt(0));
             this.heroRow = Integer.parseInt(parameters[2]);
+            this.heroSight = parameters[3];
             worldTable = new WorldTable(this.worldSize);
             int row = 0;
             while (textFileBReader.ready()) {
                 String line = textFileBReader.readLine();
                 for (int j = 0; j < this.worldSize; j++) {
-                    this.worldTable.setCellValue(j, row, line.charAt(j));
-                    //System.out.print(line.charAt(j));
+                    this.worldTable.setCellValue(j, row, line.substring(j, j + 1));
                 }
-                //System.out.println();
                 row++;
             }
             textFileBReader.close();
+            this.worldTable.setCellValue(this.heroColumn - 1, this.heroRow - 1, "H");
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
@@ -112,12 +121,44 @@ public class World {
      * Method used to print a map to screen.
      */
     public void renderWorld() {
-        System.out.println(this.worldSize + " " + this.heroRow + " " + this.heroColumn);
+        IRender render = new Render();
+        IContextBuilder builder = render.newBuilder();
+        builder.width((this.worldSize + 1) * 4 + 1).height((this.worldSize + 1) * 2 + 1);
+        Table table = new Table(this.worldSize + 1, this.worldSize + 1);
+        for (int i = 0; i < this.worldSize; i++) {
+            table.setElement(i + 2, 1, new Label(" " + alphabet.charAt(i)), false);
+        }
         for (int i = 0; i < this.worldSize; i++) {
             for (int j = 0; j < this.worldSize; j++) {
-                System.out.print(this.worldTable.getCellValue(j, i));
+                table.setElement(1, j + 2, new Label(" " + Integer.toString(j + 1)), false);
+                if (this.worldTable.getCellValue(j, i).equalsIgnoreCase("G")) {
+                    table.setElement(j + 2, i + 2, new Label(" " + this.worldTable.getCellValue(j, i)), true);
+                } else {
+                    table.setElement(j + 2, i + 2, new Label(" " + this.worldTable.getCellValue(j, i)));
+                }
             }
-            System.out.println();
         }
+        builder.element(table);
+        ICanvas canvas = render.render(builder.build());
+        String s = canvas.getText();
+        System.out.println(s);
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    /**
+     * Input user name from console.
+     */
+    public String inputUserName() {
+        System.out.print("Kérem adja meg a keresztnevét: ");
+        Scanner input = new Scanner(System.in);
+        this.userName = input.nextLine();
+        return this.userName;
     }
 }
