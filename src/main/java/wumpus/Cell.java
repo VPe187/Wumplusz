@@ -5,10 +5,10 @@ package wumpus;
  */
 public class Cell {
 
-    private String value;
+    protected String value;
 
-    public Cell() {
-        this.value = "_";
+    public Cell(String value) {
+        this.value = value;
     }
 
     public void setCellValue(String value) {

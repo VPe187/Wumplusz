@@ -31,6 +31,7 @@ public class Controller {
         this.mainMenu.addItem(mainMenuItemGame);
         this.mainMenu.addItem(mainMenuItemQuit);
         this.start();
+        System.out.println("Szia kedves " + this.world.getPlayer().getName() + "!");
         this.userInput(mainMenu);
     }
 
@@ -57,7 +58,11 @@ public class Controller {
         System.out.print("Kérem adja meg a keresztnevét: ");
         Scanner input = new Scanner(System.in);
         String playerName = input.nextLine();
-        this.world.getPlayer().setName(playerName);
+        if (playerName == null || playerName.isEmpty()) {
+            this.world.getPlayer().setName("Unnamed");
+        } else {
+            this.world.getPlayer().setName(playerName);
+        }
     }
 
     protected void userInput(Menu menu) {

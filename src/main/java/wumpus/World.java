@@ -12,16 +12,9 @@ import com.indvd00m.ascii.render.elements.Label;
 import com.indvd00m.ascii.render.elements.Table;
 
 /**
- * World class used to store Wumpus world.
+ * World Wumpus class used to store Wumpus world.
  */
 public class World {
-    /**
-     * Hero sights.
-     */
-    protected enum HeroSight {
-        EAST, WEST, NORTH, SOUTH, NONE
-    }
-
     static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVXYW";
     static final int MIN_WORLD_SIZE = 6;
     static final int MAX_WORLD_SIZE = 20;
@@ -30,12 +23,9 @@ public class World {
     static final int WUMPUSES_HARD = 3;
     static final String WORLD_INPUT_FILENAME = "wumpuszinput.txt";
     private int worldSize;
-    private int heroColumn;
-    private int heroRow;
-    private HeroSight heroSight;
     private WorldTable worldTable;
     private final int wumpusCount;
-    private Player player = new Player();
+    private final Player player = new Player();
 
     public World() {
         this.loadWorldFromFile();
@@ -54,10 +44,8 @@ public class World {
     public void setWorldSize(int worldSize) {
         if (worldSize > MAX_WORLD_SIZE) {
             this.worldSize = MAX_WORLD_SIZE;
-        } else if (worldSize < MIN_WORLD_SIZE) {
-            this.worldSize = MIN_WORLD_SIZE;
         } else {
-            this.worldSize = worldSize;
+            this.worldSize = Math.max(worldSize, MIN_WORLD_SIZE);
         }
     }
 
@@ -94,36 +82,36 @@ public class World {
             wordParametersRow = textFileBReader.readLine();
             parameters = wordParametersRow.split(" ");
             this.worldSize = Integer.parseInt(parameters[0]);
-            this.heroColumn = integerFromLetter(parameters[1].charAt(0));
-            this.heroRow = Integer.parseInt(parameters[2]);
-            switch (parameters[3]) {
-                case "N":
-                    this.heroSight = HeroSight.NORTH;
-                    break;
-                case "W":
-                    this.heroSight = HeroSight.WEST;
-                    break;
-                case "E":
-                    this.heroSight = HeroSight.EAST;
-                    break;
-                case "S":
-                    this.heroSight = HeroSight.SOUTH;
-                    break;
-                default:
-                    this.heroSight = HeroSight.NONE;
-                    break;
-            }
+            int heroColumn;
+            int heroRow;
+            heroColumn = integerFromLetter(parameters[1].charAt(0));
+            heroRow = Integer.parseInt(parameters[2]);
+            HeroSight heroSight = switch (parameters[3]) {
+                case "N" -> HeroSight.NORTH;
+                case "W" -> HeroSight.WEST;
+                case "E" -> HeroSight.EAST;
+                case "S" -> HeroSight.SOUTH;
+                default -> HeroSight.NONE;
+            };
             worldTable = new WorldTable(this.worldSize);
             int row = 0;
             while (textFileBReader.ready()) {
                 String line = textFileBReader.readLine();
                 for (int j = 0; j < this.worldSize; j++) {
-                    this.worldTable.setCellValue(j, row, line.substring(j, j + 1));
+                    String cellValue = line.substring(j, j + 1);
+                    if (cellValue.equalsIgnoreCase("H")) {
+                        this.worldTable.addCell(j, row, new CellHero(cellValue, this.wumpusCountByWorldSize(this.worldSize)));
+                        this.worldTable.setHeroPosRow(row);
+                        this.worldTable.setHeroPosColumn(j);
+                        this.worldTable.getHeroCell().setHeroSight(heroSight);
+                    } else {
+                        this.worldTable.addCell(j, row, new Cell(cellValue));
+                    }
                 }
                 row++;
             }
             textFileBReader.close();
-            this.worldTable.setCellValue(this.heroColumn - 1, this.heroRow - 1, "H");
+            this.worldTable.setCellValue(heroColumn - 1, heroRow - 1, "H");
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
@@ -151,7 +139,7 @@ public class World {
         for (int i = 0; i < this.worldSize; i++) {
             for (int j = 0; j < this.worldSize; j++) {
                 table.setElement(1, j + 2, new Label(" " + (j + 1)), false);
-                if (this.worldTable.getCellValue(j, i).equalsIgnoreCase("G") || this.worldTable.getCellValue(j, i).equalsIgnoreCase("HP")) {
+                if (this.worldTable.getCellValue(j, i).equalsIgnoreCase("G") || this.worldTable.getCellValue(j, i).equalsIgnoreCase("H")) {
                     table.setElement(j + 2, i + 2, new Label(" " + this.worldTable.getCellValue(j, i)), true);
                 } else {
                     table.setElement(j + 2, i + 2, new Label(" " + this.worldTable.getCellValue(j, i)));
@@ -168,8 +156,5 @@ public class World {
         return player;
     }
 
-    protected void setPlayer(Player player) {
-        this.player = player;
-    }
 
 }
