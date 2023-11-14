@@ -10,6 +10,7 @@ import com.indvd00m.ascii.render.api.ICanvas;
 import com.indvd00m.ascii.render.api.IContextBuilder;
 import com.indvd00m.ascii.render.api.IRender;
 import com.indvd00m.ascii.render.elements.Label;
+import com.indvd00m.ascii.render.elements.PseudoText;
 import com.indvd00m.ascii.render.elements.Table;
 
 /**
@@ -29,12 +30,11 @@ public class World {
     private String heroSight;
     private WorldTable worldTable;
     private final int wumpusCount;
-    private String userName;
+    private Player player = new Player();
 
     public World() {
         this.loadWorldFromFile();
         this.wumpusCount = wumpusCountByWorldSize(this.worldSize);
-        //renderWorld();
     }
 
     public World(int worldSize) {
@@ -143,21 +143,32 @@ public class World {
         System.out.println(s);
     }
 
-    public String getUserName() {
-        return userName;
+    protected void welcomeText() {
+        IRender render = new Render();
+        IContextBuilder builder = render.newBuilder();
+        builder.width(60).height(14);
+        builder.element(new PseudoText("Wumplusz"));
+        ICanvas canvas = render.render(builder.build());
+        String s = canvas.getText();
+        System.out.println(s);
+        System.out.println("### NYE - Progtech Assigment 2023/2024/1 - VPe");
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     /**
-     * Input user name from console.
+     * Input Player name from console.
      */
-    public String inputUserName() {
+    public void inputUserName() {
         System.out.print("Kérem adja meg a keresztnevét: ");
         Scanner input = new Scanner(System.in);
-        this.userName = input.nextLine();
-        return this.userName;
+        String playerName = input.nextLine();
+        this.player.setName(playerName);
     }
 }

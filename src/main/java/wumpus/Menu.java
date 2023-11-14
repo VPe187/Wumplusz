@@ -8,7 +8,7 @@ import java.util.Scanner;
  */
 public class Menu {
     ArrayList<MenuItem> menuItems;
-    String userName;
+    String playerName;
 
     public Menu() {
         menuItems = new ArrayList<>();
@@ -18,8 +18,8 @@ public class Menu {
         this.menuItems.add(menuItem);
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     /**
@@ -32,9 +32,8 @@ public class Menu {
         while (!(selection > 0 && selection < this.menuItems.size() + 1)) {
             System.out.println();
             System.out.println("================================");
-            System.out.println("Játékos: " + this.userName);
-            System.out.println("================================");
-            System.out.println("== M E N Ü - kérem válasszon: ==");
+            System.out.println(" Játékos: " + this.playerName);
+            System.out.println(" M E N Ü - kérem válasszon:");
             System.out.println("================================");
             for (int i = 0; i < this.menuItems.size(); i++) {
                 System.out.println(i + 1 + " - " + this.menuItems.get(i).getLabel());
