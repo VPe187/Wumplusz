@@ -1,52 +1,72 @@
 package wumpus;
 
+import java.util.Scanner;
+
+import com.indvd00m.ascii.render.Render;
+import com.indvd00m.ascii.render.api.ICanvas;
+import com.indvd00m.ascii.render.api.IContextBuilder;
+import com.indvd00m.ascii.render.api.IRender;
+import com.indvd00m.ascii.render.elements.PseudoText;
+
 /**
  * Game controller class.
  */
 public class Controller {
     private final World world;
-    private MenuItem selectedItem;
     private final Menu mainMenu;
-    private final MenuItem mainMenuItem1;
-    private final MenuItem mainMenuItem2;
-    private final MenuItem mainMenuItem3;
-    private final MenuItem mainMenuItem4;
-    private final MenuItem mainMenuItem5;
+    private final MenuItem mainMenuItemEditor;
+    private final MenuItem mainMenuItemLoadFile;
+    private final MenuItem mainMenuItemGame;
+    private final MenuItem mainMenuItemQuit;
 
     public Controller() {
         this.world = new World();
         this.mainMenu = new Menu();
-        this.mainMenu.setPlayerName(world.getPlayer().getName());
-        this.mainMenuItem1 = new MenuItem("Játékos neve");
-        this.mainMenu.addItem(mainMenuItem1);
-        this.mainMenuItem2 = new MenuItem("Pályaszerkesztés");
-        this.mainMenu.addItem(mainMenuItem2);
-        this.mainMenuItem3 = new MenuItem("Betöltés fájlból");
-        this.mainMenu.addItem(mainMenuItem3);
-        this.mainMenuItem4 = new MenuItem("Játék");
-        this.mainMenu.addItem(mainMenuItem4);
-        this.mainMenuItem5 = new MenuItem("Kilépés");
-        this.mainMenu.addItem(mainMenuItem5);
-        this.render();
+        this.mainMenuItemEditor = new MenuItem("Pályaszerkesztés");
+        this.mainMenuItemLoadFile = new MenuItem("Betöltés fájlból");
+        this.mainMenuItemGame = new MenuItem("Játék");
+        this.mainMenuItemQuit = new MenuItem("Kilépés");
+        this.mainMenu.addItem(mainMenuItemEditor);
+        this.mainMenu.addItem(mainMenuItemLoadFile);
+        this.mainMenu.addItem(mainMenuItemGame);
+        this.mainMenu.addItem(mainMenuItemQuit);
+        this.start();
         this.userInput(mainMenu);
     }
 
-    protected void render() {
-        world.welcomeText();
-        world.inputUserName();
-        this.mainMenu.setPlayerName(this.world.getPlayer().getName());
+    protected void start() {
+        this.welcomeText();
+        this.inputUserName();
+    }
+
+    protected void welcomeText() {
+        IRender render = new Render();
+        IContextBuilder builder = render.newBuilder();
+        builder.width(60).height(14);
+        builder.element(new PseudoText("Wumplusz"));
+        ICanvas canvas = render.render(builder.build());
+        String s = canvas.getText();
+        System.out.println(s);
+        System.out.println("### NYE - Progtech Assigment 2023/2024/1 - VPe");
+    }
+
+    /**
+     * Input Player name from console.
+     */
+    public void inputUserName() {
+        System.out.print("Kérem adja meg a keresztnevét: ");
+        Scanner input = new Scanner(System.in);
+        String playerName = input.nextLine();
+        this.world.getPlayer().setName(playerName);
     }
 
     protected void userInput(Menu menu) {
+        MenuItem selectedItem;
         do {
-            this.selectedItem = menu.select();
-            if (this.selectedItem.equals(this.mainMenuItem1)) {
-                this.world.inputUserName();
-                menu.setPlayerName(world.getPlayer().getName());
-            }
-            if (this.selectedItem.equals(this.mainMenuItem4)) {
+            selectedItem = menu.select();
+            if (selectedItem.equals(this.mainMenuItemGame)) {
                 this.world.renderWorld();
             }
-        } while (!this.selectedItem.equals(this.mainMenuItem5));
+        } while (!selectedItem.equals(this.mainMenuItemQuit));
     }
 }
