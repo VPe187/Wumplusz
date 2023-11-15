@@ -16,20 +16,21 @@ public class Map {
     static final int WUMPUSES_EASY = 1;
     static final int WUMPUSES_MEDIUM = 2;
     static final int WUMPUSES_HARD = 3;
-    private final int size;
+    private int size;
     private final Cell[][] cells;
+    private final int wumpusCount;
 
     public Map(int size, Cell[][] cells) {
-        this.size = size;
+        this.setSize(size);
         this.cells = cells;
-        //
-        //this.fillMapWithEmptyCells();
+        this.wumpusCount = wumpusCountByWorldSize(this.size);
     }
 
     public Map(int size) {
-        this.size = size;
+        this.setSize(size);
         this.cells = new Cell[size][size];
         fillMapWithEmptyCells();
+        this.wumpusCount = wumpusCountByWorldSize(this.size);
     }
 
     /**
@@ -47,12 +48,34 @@ public class Map {
         return size;
     }
 
+    /**
+     * Method used to set world size.
+     */
+    public void setSize(int worldSize) {
+        if (worldSize > MAX_WORLD_SIZE) {
+            this.size = MAX_WORLD_SIZE;
+        } else {
+            this.size = Math.max(worldSize, MIN_WORLD_SIZE);
+        }
+    }
+
     public Cell[][] getCells() {
         return cells;
     }
 
     public String getCellValue(int col, int row) {
         return this.cells[col][row].getValue();
+    }
+
+    private int wumpusCountByWorldSize(int worldSize) {
+        if (worldSize <= 8) {
+            return WUMPUSES_EASY;
+        }
+        if (worldSize <= 14) {
+            return WUMPUSES_MEDIUM;
+        } else {
+            return WUMPUSES_HARD;
+        }
     }
 
     /**

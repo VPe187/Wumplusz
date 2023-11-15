@@ -3,9 +3,9 @@ package wumpus.exceptions;
 /**
  * If map reading generate error, throws this exception.
  */
-public class WorldReadingException extends Exception {
+public class MapReadingException extends Exception {
 
-    public WorldReadingException(String message) {
+    public MapReadingException(String message) {
         super(message);
     }
 

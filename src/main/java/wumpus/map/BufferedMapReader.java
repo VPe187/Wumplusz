@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import wumpus.exceptions.WorldReadingException;
+import wumpus.exceptions.MapReadingException;
 
 /**
  * Buffered Map reader.
@@ -18,7 +18,7 @@ public class BufferedMapReader implements MapReader {
     }
 
     @Override
-    public List<String> readMap() throws WorldReadingException {
+    public List<String> readMap() throws MapReadingException {
         String row;
         List<String> rows = new ArrayList<>();
         try {
@@ -26,7 +26,7 @@ public class BufferedMapReader implements MapReader {
                 rows.add(row);
             }
         } catch (IOException e) {
-            throw new WorldReadingException("Failed to read world.");
+            throw new MapReadingException("Failed to read world.");
         }
         return rows;
     }
