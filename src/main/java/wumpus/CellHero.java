@@ -8,8 +8,8 @@ public class CellHero extends Cell {
     private int arrows;
     private HeroSight heroSight;
 
-    public CellHero(String value, int arrows) {
-        super(value);
+    public CellHero(int col, int row, String value, int arrows) {
+        super(col, row, value);
         this.arrows = arrows;
     }
 

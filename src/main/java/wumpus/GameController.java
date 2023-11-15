@@ -7,11 +7,14 @@ import com.indvd00m.ascii.render.api.ICanvas;
 import com.indvd00m.ascii.render.api.IContextBuilder;
 import com.indvd00m.ascii.render.api.IRender;
 import com.indvd00m.ascii.render.elements.PseudoText;
+import wumpus.exceptions.MapParsingException;
+import wumpus.exceptions.WorldReadingException;
+import wumpus.world.World;
 
 /**
  * Game controller class.
  */
-public class Controller {
+public class GameController {
     private final World world;
     private final Menu mainMenu;
     private final MenuItem mainMenuItemEditor;
@@ -19,7 +22,7 @@ public class Controller {
     private final MenuItem mainMenuItemGame;
     private final MenuItem mainMenuItemQuit;
 
-    public Controller() {
+    public GameController() throws MapParsingException, WorldReadingException {
         this.world = new World();
         this.mainMenu = new Menu();
         this.mainMenuItemEditor = new MenuItem("Pályaszerkesztés");
@@ -30,14 +33,13 @@ public class Controller {
         this.mainMenu.addItem(mainMenuItemLoadFile);
         this.mainMenu.addItem(mainMenuItemGame);
         this.mainMenu.addItem(mainMenuItemQuit);
-        this.start();
-        System.out.println("Szia kedves " + this.world.getPlayer().getName() + "!");
-        this.userInput(mainMenu);
     }
 
     protected void start() {
         this.welcomeText();
         this.inputUserName();
+        System.out.println("Szia kedves " + this.world.getPlayer().getName() + "!");
+        this.userInput(mainMenu);
     }
 
     protected void welcomeText() {

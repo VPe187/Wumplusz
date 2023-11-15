@@ -3,6 +3,8 @@ package wumpus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import wumpus.world.World;
+import wumpus.util.Utils;
 
 class WorldTest {
     private World underTest;
@@ -126,7 +128,8 @@ class WorldTest {
         // given
         underTest = new World(8);
         // when
-        int result = World.integerFromLetter('A');
+        int result = Utils.integerFromLetter('A');
+
         // then
         Assertions.assertEquals(result, 1);
     }
@@ -136,7 +139,7 @@ class WorldTest {
         // given
         underTest = new World(8);
         // when
-        int result = World.integerFromLetter('B');
+        int result = Utils.integerFromLetter('B');
         // then
         Assertions.assertEquals(result, 2);
     }
@@ -146,7 +149,7 @@ class WorldTest {
         // given
         underTest = new World(12);
         // when
-        int result = World.integerFromLetter('T');
+        int result = Utils.integerFromLetter('T');
         // then
         Assertions.assertEquals(result, 20);
     }

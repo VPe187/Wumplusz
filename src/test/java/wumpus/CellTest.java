@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CellTest {
-    Cell underTest = new Cell("_");
+    Cell underTest = new Cell(1, 1, "_");
 
     @BeforeEach
     void setup() {

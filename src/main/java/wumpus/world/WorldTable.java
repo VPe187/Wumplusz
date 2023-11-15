@@ -1,4 +1,7 @@
-package wumpus;
+package wumpus.world;
+
+import wumpus.Cell;
+import wumpus.CellHero;
 
 /**
  * World matrix used to store Wumpus world cells.
@@ -14,15 +17,16 @@ public class WorldTable {
         this.rows = worldSize;
         this.columns = worldSize;
         this.cells = new Cell[rows][columns];
+        this.fillTableEmptyCells();
     }
 
     /**
      * Fill WordTable with empty type cells.
      */
-    public void fillTableEmptyCells() {
+    private void fillTableEmptyCells() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                this.cells[j][i] = new Cell("_");
+                this.cells[j][i] = new Cell(j, i, "_");
             }
         }
     }

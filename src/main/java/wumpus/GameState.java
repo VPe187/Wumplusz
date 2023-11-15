@@ -3,5 +3,5 @@ package wumpus;
 /**
  * Game state class.
  */
-public class State {
+public class GameState {
 }
