@@ -32,7 +32,6 @@ public class World {
     static final int WUMPUSES_HARD = 3;
     static final String WORLD_INPUT_FILENAME = "wumpuszinput.txt";
     private int worldSize;
-    private WorldTable worldTable;
     private final int wumpusCount;
     private final Player player = new Player();
     private Map map;
@@ -44,7 +43,6 @@ public class World {
 
     public World(int worldSize) {
         this.setWorldSize(worldSize);
-        this.worldTable = new WorldTable(this.worldSize);
         this.wumpusCount = wumpusCountByWorldSize(this.worldSize);
     }
 

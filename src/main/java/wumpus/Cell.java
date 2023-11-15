@@ -55,7 +55,7 @@ public class Cell {
         }
 
         /**
-         * Cell builder.
+         * Cell builder with col, row value parameters.
          */
         public CellBuilder withColRowValue(int col, int row, String value) {
             this.col = col;

@@ -22,7 +22,7 @@ public class MapParser {
     private static int heroRow;
     private static String heroSight;
 
-    public MapParser(List<String> rows) throws MapParsingException {
+    public MapParser(List<String> rows) {
         MapParser.rows = rows;
     }
 
