@@ -1,4 +1,4 @@
-package wumpus;
+package wumpus.model;
 
 /**
  * Player class.

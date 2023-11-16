@@ -1,4 +1,4 @@
-package wumpus;
+package wumpus.game;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -13,51 +13,42 @@ import com.indvd00m.ascii.render.api.IRender;
 import com.indvd00m.ascii.render.elements.PseudoText;
 import wumpus.exceptions.MapParsingException;
 import wumpus.exceptions.MapReadingException;
+import wumpus.input.InputHandler;
+import wumpus.input.InputReader;
 import wumpus.map.BufferedMapReader;
-import wumpus.map.Map;
 import wumpus.map.MapParser;
 import wumpus.map.MapReader;
+import wumpus.model.Player;
 import wumpus.ui.MapRenderer;
 
 /**
  * Game controller class.
  */
 public class GameController {
-    static final int MIN_WORLD_SIZE = 6;
-    static final int MAX_WORLD_SIZE = 20;
-    static final int WUMPUSES_EASY = 1;
-    static final int WUMPUSES_MEDIUM = 2;
-    static final int WUMPUSES_HARD = 3;
     static final String WORLD_INPUT_FILENAME = "wumpuszinput.txt";
-    private int worldSize;
     private final Player player = new Player();
-    private final Menu mainMenu;
-    private final MenuItem mainMenuItemEditor;
-    private final MenuItem mainMenuItemLoadFile;
-    private final MenuItem mainMenuItemGame;
-    private final MenuItem mainMenuItemQuit;
-    private Map map;
     private final MapRenderer mapRenderer = new MapRenderer();
+    private final GameState gameState;
+    private final InputReader inputReader;
+    private final InputHandler inputHandler;
 
-    public GameController() throws MapParsingException, MapReadingException {
-
-        this.mainMenu = new Menu();
-        this.mainMenuItemEditor = new MenuItem("Pályaszerkesztés");
-        this.mainMenuItemLoadFile = new MenuItem("Betöltés fájlból");
-        this.mainMenuItemGame = new MenuItem("Játék");
-        this.mainMenuItemQuit = new MenuItem("Kilépés");
-        this.mainMenu.addItem(mainMenuItemEditor);
-        this.mainMenu.addItem(mainMenuItemLoadFile);
-        this.mainMenu.addItem(mainMenuItemGame);
-        this.mainMenu.addItem(mainMenuItemQuit);
+    public GameController(GameState gameState, InputReader inputReader, InputHandler inputHandler) {
+        this.gameState = gameState;
+        this.inputReader = inputReader;
+        this.inputHandler = inputHandler;
     }
 
-    protected void start() throws MapParsingException, MapReadingException {
+    /**
+     * Start game.
+     */
+    public void start() {
         this.welcomeText();
         this.inputUserName();
         System.out.println("Szia kedves " + this.player.getName() + "!");
-        this.readWorldFromFile();
-        this.userInput(mainMenu);
+        while (gameState.isRunning()) {
+            String input = this.inputReader.readInput();
+            inputHandler.handleInput(input);
+        }
     }
 
     /**
@@ -70,11 +61,14 @@ public class GameController {
             MapReader mapReader = new BufferedMapReader(reader);
             List<String> rows = mapReader.readMap();
             MapParser mph = new MapParser(rows);
-            this.map = mph.getMap();
+            this.gameState.setCurrentMap(mph.getMap());
         }
     }
 
-    protected void welcomeText() {
+    /**
+     * Method used to print welcome text.
+     */
+    public void welcomeText() {
         IRender render = new Render();
         IContextBuilder builder = render.newBuilder();
         builder.width(60).height(14);
@@ -99,17 +93,11 @@ public class GameController {
         }
     }
 
-    protected void userInput(Menu menu) {
-        MenuItem selectedItem;
-        do {
-            selectedItem = menu.select();
-            if (selectedItem.equals(this.mainMenuItemGame)) {
-                this.mapRenderer.render(this.map);
-            }
-        } while (!selectedItem.equals(this.mainMenuItemQuit));
+    public Player getPlayer() {
+        return player;
     }
 
-
-
-
+    public GameState getGameState() {
+        return gameState;
+    }
 }

@@ -1,4 +1,4 @@
-package wumpus;
+package wumpus.model;
 
 /**
  * Cell class used to store one field in Wumpus world.

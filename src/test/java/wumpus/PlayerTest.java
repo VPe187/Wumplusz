@@ -2,6 +2,7 @@ package wumpus;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import wumpus.model.Player;
 
 class PlayerTest {
 

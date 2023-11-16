@@ -3,9 +3,9 @@ package wumpus.map;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import wumpus.Cell;
-import wumpus.HeroSight;
 import wumpus.exceptions.MapParsingException;
+import wumpus.model.Cell;
+import wumpus.model.HeroSight;
 import wumpus.util.Utils;
 
 /**
@@ -32,25 +32,21 @@ public class MapParser {
         if (headerRow.length != 4) {
             throw new MapParsingException("Header contains invalid number of characters!");
         }
-
         if (!Pattern.matches(VALID_SIZE_REGEX, headerRow[0])) {
             throw new MapParsingException("Header size value contains invalid character!");
         } else {
             MapParser.size = Integer.parseInt(headerRow[0]);
         }
-
         if (!Pattern.matches(VALID_HERO_COL_REGEX, headerRow[1])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
             MapParser.heroCol = Utils.integerFromLetter(headerRow[1]);
         }
-
         if (!Pattern.matches(VALID_HERO_ROW_REGEX, headerRow[2])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
             MapParser.heroRow = Integer.parseInt(headerRow[2]);
         }
-
         if (!Pattern.matches(VALID_HERO_SIGHT_REGEX, headerRow[3])) {
             throw new MapParsingException("Header hero sight value contains invalid character!");
         } else {

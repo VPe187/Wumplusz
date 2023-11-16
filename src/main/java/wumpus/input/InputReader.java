@@ -1,4 +1,4 @@
-package wumpus;
+package wumpus.input;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +18,7 @@ public class InputReader {
      */
     public String readInput() {
         String input = null;
+        System.out.print("#:");
         try {
             input = reader.readLine();
         } catch (IOException e) {

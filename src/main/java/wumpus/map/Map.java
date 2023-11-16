@@ -1,7 +1,7 @@
 package wumpus.map;
 
-import wumpus.Cell;
-import wumpus.HeroSight;
+import wumpus.model.Cell;
+import wumpus.model.HeroSight;
 
 /**
  * Map class.
@@ -17,7 +17,7 @@ public class Map {
     static final int WUMPUSES_EASY = 1;
     static final int WUMPUSES_MEDIUM = 2;
     static final int WUMPUSES_HARD = 3;
-    private int size;
+    private final int size;
     private final Cell[][] cells;
     private HeroSight heroSight;
     private int wumpusCells;
@@ -28,32 +28,22 @@ public class Map {
     private int goldCells;
     private int steps;
 
-
     public Map(int size, Cell[][] cells, HeroSight heroSight) {
-        this.setSize(size);
+        this.size = size;
         this.cells = cells;
         this.wumpusCells = wumpusCountByWorldSize(this.size);
         this.arrowCount = this.wumpusCells;
         this.heroSight = heroSight;
-        this.countElements();
+        this.getElementsCounts();
     }
 
-    public Map(int size) {
-        this.setSize(size);
-        this.cells = new Cell[size][size];
-        fillMapWithEmptyCells();
-        this.wumpusCells = wumpusCountByWorldSize(this.size);
-        this.arrowCount = this.wumpusCells;
-        this.heroSight = HeroSight.NORTH;
-        this.countElements();
-    }
-
-    private void countElements() {
+    private void getElementsCounts() {
         this.wallCells = 0;
         this.emptyCells = 0;
         this.wumpusCells = 0;
         this.pitCells = 0;
         this.goldCells = 0;
+        this.arrowCount = 0;
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 switch (this.cells[j][i].getCellValue()) {
@@ -65,6 +55,7 @@ public class Map {
                         break;
                     case "U":
                         this.wumpusCells++;
+                        this.arrowCount++;
                         break;
                     case "P":
                         this.pitCells++;
@@ -79,34 +70,8 @@ public class Map {
         }
     }
 
-    /**
-     * Fill WordTable with empty type cells.
-     */
-    private void fillMapWithEmptyCells() {
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                this.cells[j][i] = new Cell(j, i, "_");
-            }
-        }
-    }
-
     public int getSize() {
         return size;
-    }
-
-    /**
-     * Method used to set world size.
-     */
-    public void setSize(int worldSize) {
-        if (worldSize > MAX_WORLD_SIZE) {
-            this.size = MAX_WORLD_SIZE;
-        } else {
-            this.size = Math.max(worldSize, MIN_WORLD_SIZE);
-        }
-    }
-
-    public Cell[][] getCells() {
-        return cells;
     }
 
     public String getCellValue(int col, int row) {
@@ -157,11 +122,12 @@ public class Map {
     }
 
     /**
-     * Map builder.
+     * Map builder class.
      */
     public static final class MapBuilder {
         private int size;
         private Cell[][] cells;
+        private HeroSight heroSight;
 
         private MapBuilder() {
         }
@@ -170,18 +136,39 @@ public class Map {
             return new MapBuilder();
         }
 
+        /**
+         * Method build withSize.
+         */
         public MapBuilder withSize(int size) {
-            this.size = size;
+            if (size > MAX_WORLD_SIZE) {
+                this.size = MAX_WORLD_SIZE;
+            } else {
+                this.size = Math.max(size, MIN_WORLD_SIZE);
+            }
             return this;
         }
 
         /**
-         * Map builder.
+         * Map builder withCells.
          */
-        public MapBuilder withSizeAndCells(int size, Cell[][] cells) {
-            this.size = size;
+        public MapBuilder withCells(Cell[][] cells) {
             this.cells = cells;
             return this;
+        }
+
+        /**
+         * Map builder withHeroSight.
+         */
+        public MapBuilder withHeroSight(HeroSight heroSight) {
+            this.heroSight = heroSight;
+            return this;
+        }
+
+        /**
+         * Map build.
+         */
+        public Map build(int size, Cell[][] cells, HeroSight heroSight) {
+            return new Map(size, cells, heroSight);
         }
 
     }
