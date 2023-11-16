@@ -35,6 +35,7 @@ public class Map {
         this.arrowCount = this.wumpusCells;
         this.heroSight = heroSight;
         this.getElementsCounts();
+        this.steps = 0;
     }
 
     private void getElementsCounts() {
@@ -72,6 +73,18 @@ public class Map {
 
     public int getSize() {
         return size;
+    }
+
+    public void setHeroSight(HeroSight heroSight) {
+        this.heroSight = heroSight;
+    }
+
+    public void setArrowCount(int arrowCount) {
+        this.arrowCount = arrowCount;
+    }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
     }
 
     public String getCellValue(int col, int row) {
