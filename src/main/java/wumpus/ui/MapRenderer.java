@@ -21,6 +21,7 @@ public class MapRenderer {
      * Method used to render map with ASCII-renderer.
      */
     public void render(Map map) {
+        System.out.println("WUMPLUSZ World:");
         IRender render = new Render();
         IContextBuilder builder = render.newBuilder();
         builder.width((map.getSize() + 1) * 4 + 1).height((map.getSize() + 1) * 2 + 1);
@@ -42,6 +43,10 @@ public class MapRenderer {
         ICanvas canvas = render.render(builder.build());
         String s = canvas.getText();
         System.out.println(s);
+        System.out.println("Hero sight:" + map.getHeroSight().toString());
+        System.out.println("Arrows:" + map.getArrowCount() + ", Wumpuses:" + map.getWumpusCells() + ", Gold:" + map.getGoldCells());
+        System.out.println("Pits:" + map.getPitCells() + ", Walls:" + map.getWallCells() + ", Empty:" + map.getEmptyCells());
+
     }
 
 

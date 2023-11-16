@@ -1,5 +1,7 @@
 package wumpus.util;
 
+import java.util.Objects;
+
 /**
  * Tools for this project.
  */
@@ -9,9 +11,9 @@ public class Utils {
     /**
      * Convert letter to Integer.
      */
-    public static int integerFromLetter(char letter) {
+    public static int integerFromLetter(String letter) {
         for (int i = 0; i <= alphabet.length(); i++) {
-            if (alphabet.charAt(i) == letter) {
+            if (Objects.equals(alphabet.split("")[i], letter)) {
                 return i + 1;
             }
         }

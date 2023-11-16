@@ -1,6 +1,7 @@
 package wumpus.map;
 
 import wumpus.Cell;
+import wumpus.HeroSight;
 
 /**
  * Map class.
@@ -18,19 +19,64 @@ public class Map {
     static final int WUMPUSES_HARD = 3;
     private int size;
     private final Cell[][] cells;
-    private final int wumpusCount;
+    private HeroSight heroSight;
+    private int wumpusCells;
+    private int arrowCount;
+    private int emptyCells;
+    private int wallCells;
+    private int pitCells;
+    private int goldCells;
+    private int steps;
 
-    public Map(int size, Cell[][] cells) {
+
+    public Map(int size, Cell[][] cells, HeroSight heroSight) {
         this.setSize(size);
         this.cells = cells;
-        this.wumpusCount = wumpusCountByWorldSize(this.size);
+        this.wumpusCells = wumpusCountByWorldSize(this.size);
+        this.arrowCount = this.wumpusCells;
+        this.heroSight = heroSight;
+        this.countElements();
     }
 
     public Map(int size) {
         this.setSize(size);
         this.cells = new Cell[size][size];
         fillMapWithEmptyCells();
-        this.wumpusCount = wumpusCountByWorldSize(this.size);
+        this.wumpusCells = wumpusCountByWorldSize(this.size);
+        this.arrowCount = this.wumpusCells;
+        this.heroSight = HeroSight.NORTH;
+        this.countElements();
+    }
+
+    private void countElements() {
+        this.wallCells = 0;
+        this.emptyCells = 0;
+        this.wumpusCells = 0;
+        this.pitCells = 0;
+        this.goldCells = 0;
+        for (int i = 0; i < this.size; i++) {
+            for (int j = 0; j < this.size; j++) {
+                switch (this.cells[j][i].getCellValue()) {
+                    case "W":
+                        this.wallCells++;
+                        break;
+                    case "_":
+                        this.emptyCells++;
+                        break;
+                    case "U":
+                        this.wumpusCells++;
+                        break;
+                    case "P":
+                        this.pitCells++;
+                        break;
+                    case "G":
+                        this.goldCells++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     /**
@@ -76,6 +122,38 @@ public class Map {
         } else {
             return WUMPUSES_HARD;
         }
+    }
+
+    public HeroSight getHeroSight() {
+        return heroSight;
+    }
+
+    public int getArrowCount() {
+        return arrowCount;
+    }
+
+    public int getWumpusCells() {
+        return wumpusCells;
+    }
+
+    public int getEmptyCells() {
+        return emptyCells;
+    }
+
+    public int getWallCells() {
+        return wallCells;
+    }
+
+    public int getPitCells() {
+        return pitCells;
+    }
+
+    public int getGoldCells() {
+        return goldCells;
+    }
+
+    public int getSteps() {
+        return steps;
     }
 
     /**

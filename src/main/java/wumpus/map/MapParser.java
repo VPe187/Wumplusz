@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import wumpus.Cell;
+import wumpus.HeroSight;
 import wumpus.exceptions.MapParsingException;
+import wumpus.util.Utils;
 
 /**
  * Map parser.
@@ -18,9 +20,9 @@ public class MapParser {
     private static final String VALID_ROW_LETTERS = "[WUGP_]+";
     private static List<String> rows;
     private static int size;
-    private static String heroCol;
+    private static int heroCol;
     private static int heroRow;
-    private static String heroSight;
+    private static HeroSight heroSight;
 
     public MapParser(List<String> rows) {
         MapParser.rows = rows;
@@ -40,7 +42,7 @@ public class MapParser {
         if (!Pattern.matches(VALID_HERO_COL_REGEX, headerRow[1])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
-            MapParser.heroCol = headerRow[1];
+            MapParser.heroCol = Utils.integerFromLetter(headerRow[1]);
         }
 
         if (!Pattern.matches(VALID_HERO_ROW_REGEX, headerRow[2])) {
@@ -52,7 +54,23 @@ public class MapParser {
         if (!Pattern.matches(VALID_HERO_SIGHT_REGEX, headerRow[3])) {
             throw new MapParsingException("Header hero sight value contains invalid character!");
         } else {
-            MapParser.heroSight = headerRow[3];
+            switch (headerRow[3]) {
+                case "N":
+                    MapParser.heroSight = HeroSight.NORTH;
+                    break;
+                case "S":
+                    MapParser.heroSight = HeroSight.SOUTH;
+                    break;
+                case "E":
+                    MapParser.heroSight = HeroSight.EAST;
+                    break;
+                case "W":
+                    MapParser.heroSight = HeroSight.WEST;
+                    break;
+                default:
+                    MapParser.heroSight = HeroSight.NONE;
+                    break;
+            }
         }
 
     }
@@ -71,6 +89,7 @@ public class MapParser {
             }
             i++;
         }
+        cells[heroCol - 1][heroRow - 1] = new Cell(heroCol, heroRow, "H");
         return cells;
     }
 
@@ -80,7 +99,7 @@ public class MapParser {
     public Map getMap() throws MapParsingException {
         parseHeaderRow(rows.get(0).split(" "));
         Cell[][] cells = parseRows(rows);
-        return new Map(size, cells);
+        return new Map(size, cells, HeroSight.NORTH);
     }
 
 }
