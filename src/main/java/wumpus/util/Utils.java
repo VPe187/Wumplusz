@@ -6,7 +6,7 @@ import java.util.Objects;
  * Tools for this project.
  */
 public class Utils {
-    static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVXYW";
+    static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /**
      * Convert letter to Integer.

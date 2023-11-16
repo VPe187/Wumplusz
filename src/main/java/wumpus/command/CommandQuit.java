@@ -16,7 +16,7 @@ public class CommandQuit implements Command {
     }
 
     @Override
-    public boolean exists(String input) {
+    public boolean validateCommand(String input) {
         return (COMMAND_EXIT.equalsIgnoreCase(input) || COMMAND_QUIT.equalsIgnoreCase(input));
     }
 

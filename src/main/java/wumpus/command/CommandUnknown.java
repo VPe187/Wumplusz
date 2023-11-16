@@ -8,7 +8,7 @@ public class CommandUnknown implements Command {
     private static final String COMMAND_UNKNOWN_MESSAGE = "Unknown command.";
 
     @Override
-    public boolean exists(String input) {
+    public boolean validateCommand(String input) {
         return true;
     }
 

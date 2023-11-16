@@ -26,12 +26,22 @@ public class Main {
      */
     public static void main(String[] args) throws MapReadingException, MapParsingException, IOException {
         GameState gameState = new GameState(null, false);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        InputReader inputReader = new InputReader(bufferedReader);
+        BufferedReader bufferedReader = null;
+        InputReader inputReader = null;
+        try {
+            bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+            inputReader = new InputReader(bufferedReader);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        } finally {
+            if (bufferedReader != null) {
+                bufferedReader.close();
+            }
+        }
         List<Command> commands = List.of(
-            new CommandQuit(gameState),
-            new CommandHelp(),
-            new CommandUnknown()
+                new CommandQuit(gameState),
+                new CommandHelp(),
+                new CommandUnknown()
         );
         InputHandler inputHandler = new InputHandler(commands);
         GameController gameController = new GameController(gameState, inputReader, inputHandler);

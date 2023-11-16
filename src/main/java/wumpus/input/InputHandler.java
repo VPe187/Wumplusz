@@ -20,7 +20,7 @@ public class InputHandler {
      */
     public void handleInput(String input) {
         for (Command command : this.availableCommands) {
-            if (command.exists(input)) {
+            if (command.validateCommand(input)) {
                 command.process(input);
                 break;
             }

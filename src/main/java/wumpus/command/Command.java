@@ -8,7 +8,7 @@ public interface Command {
     /**
      * Check the command exists in command's list.
      */
-    boolean exists(String input);
+    boolean validateCommand(String input);
 
     /**
      * The given command processed.

@@ -10,7 +10,7 @@ public class CommandHelp implements Command {
             "'HERO LEFT', 'HERO RIGT', 'MOVE', 'GIVE UP', 'SHOT', 'PLAY', 'EDIT', 'LOAD', 'EXIT', 'QUIT'";
 
     @Override
-    public boolean exists(String input) {
+    public boolean validateCommand(String input) {
         return COMMAND_HELP.equalsIgnoreCase(input);
     }
 
