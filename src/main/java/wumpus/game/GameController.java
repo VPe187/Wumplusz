@@ -1,6 +1,7 @@
 package wumpus.game;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -27,7 +28,6 @@ import wumpus.ui.MapRenderer;
 public class GameController {
     static final String WORLD_INPUT_FILENAME = "wumpuszinput.txt";
     private final Player player = new Player();
-    private final MapRenderer mapRenderer = new MapRenderer();
     private final GameState gameState;
     private final InputReader inputReader;
     private final InputHandler inputHandler;
@@ -54,7 +54,7 @@ public class GameController {
     /**
      * Method used to load world and hero data from text file.
      */
-    public void readWorldFromFile() throws MapReadingException, MapParsingException {
+    public void readWorldFromFile() throws MapReadingException, MapParsingException, IOException {
         InputStream inputStream = this.getClass().getResourceAsStream("/" + WORLD_INPUT_FILENAME);
         if (inputStream != null) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -62,6 +62,7 @@ public class GameController {
             List<String> rows = mapReader.readMap();
             MapParser mph = new MapParser(rows);
             this.gameState.setCurrentMap(mph.getMap());
+            reader.close();
         }
     }
 

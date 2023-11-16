@@ -1,6 +1,7 @@
 package wumpus;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Main {
     /**
      * Entry point.
      */
-    public static void main(String[] args) throws MapReadingException, MapParsingException {
+    public static void main(String[] args) throws MapReadingException, MapParsingException, IOException {
         GameState gameState = new GameState(null, false);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         InputReader inputReader = new InputReader(bufferedReader);
