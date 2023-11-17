@@ -6,7 +6,9 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import wumpus.command.Command;
+import wumpus.command.CommandExit;
 import wumpus.command.CommandHelp;
+import wumpus.command.CommandMap;
 import wumpus.command.CommandQuit;
 import wumpus.command.CommandUnknown;
 import wumpus.exceptions.MapParsingException;
@@ -17,36 +19,35 @@ import wumpus.input.InputHandler;
 import wumpus.input.InputReader;
 
 /**
- * Launcher class used to launch application.
+ * Wumplusz application. NYE 2023/24/1 assigment.
+ * <a href="https://github.com/epam-nye-cooperation/epam-nye-progtech/blob/feature/2023_24/assignment/wumpus.md">Specification</a>
+ * <a href="https://github.com/epam-nye-cooperation/epam-nye-progtech/tree/feature/2023_24/sudoku/complete/sudoku">Learning materials used</a>
  */
 public class Main {
-
     /**
-     * Entry point.
+     * Application entry point.
      */
-    public static void main(String[] args) throws MapReadingException, MapParsingException, IOException {
-        GameState gameState = new GameState(null, false);
-        BufferedReader bufferedReader = null;
-        InputReader inputReader = null;
-        try {
-            bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-            inputReader = new InputReader(bufferedReader);
+    public static void main(String[] args) {
+        try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in))) {
+            game(bufferedReader);
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
-        } finally {
-            if (bufferedReader != null) {
-                bufferedReader.close();
-            }
         }
+    }
+
+    private static void game(BufferedReader bufferedReader) throws MapParsingException, MapReadingException, IOException {
+        GameState gameState = new GameState(null, false);
         List<Command> commands = List.of(
                 new CommandQuit(gameState),
+                new CommandExit(gameState),
+                new CommandMap(gameState),
                 new CommandHelp(),
                 new CommandUnknown()
         );
+        InputReader inputReader = new InputReader(bufferedReader);
         InputHandler inputHandler = new InputHandler(commands);
         GameController gameController = new GameController(gameState, inputReader, inputHandler);
         gameController.readWorldFromFile();
         gameController.start();
     }
-
 }

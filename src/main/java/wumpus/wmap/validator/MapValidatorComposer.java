@@ -1,9 +1,9 @@
-package wumpus.map.validator;
+package wumpus.wmap.validator;
 
 import java.util.List;
 
 import wumpus.exceptions.MapValidationException;
-import wumpus.map.Map;
+import wumpus.wmap.WMap;
 
 /**
  * Ties multiple map validations together and validates a map through them.
@@ -17,9 +17,9 @@ public class MapValidatorComposer implements MapValidator {
     }
 
     @Override
-    public void validate(Map map) throws MapValidationException {
+    public void validate(WMap wmap) throws MapValidationException {
         for (MapValidator mapValidator : mapValidatorList) {
-            mapValidator.validate(map);
+            mapValidator.validate(wmap);
         }
     }
 

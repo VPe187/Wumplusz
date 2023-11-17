@@ -1,4 +1,4 @@
-package wumpus.map;
+package wumpus.wmap;
 
 import wumpus.model.Cell;
 import wumpus.model.HeroSight;
@@ -6,7 +6,7 @@ import wumpus.model.HeroSight;
 /**
  * Map class.
  */
-public class Map {
+public class WMap {
 
     public static MapBuilder builder() {
         return new MapBuilder();
@@ -28,7 +28,7 @@ public class Map {
     private int goldCells;
     private int steps;
 
-    public Map(int size, Cell[][] cells, HeroSight heroSight) {
+    public WMap(int size, Cell[][] cells, HeroSight heroSight) {
         this.size = size;
         this.cells = cells;
         this.wumpusCells = wumpusCountByWorldSize(this.size);
@@ -180,8 +180,8 @@ public class Map {
         /**
          * Map build.
          */
-        public Map build(int size, Cell[][] cells, HeroSight heroSight) {
-            return new Map(size, cells, heroSight);
+        public WMap build(int size, Cell[][] cells, HeroSight heroSight) {
+            return new WMap(size, cells, heroSight);
         }
 
     }

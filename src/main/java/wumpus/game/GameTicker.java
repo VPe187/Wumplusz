@@ -19,7 +19,7 @@ public class GameTicker {
     /**
      * Performs a game event.
      */
-    public void performGameStep() {
+    public void performGameTick() {
         String input = inputReader.readInput();
         inputHandler.handleInput(input);
     }

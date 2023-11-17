@@ -1,4 +1,4 @@
-package wumpus.map;
+package wumpus.wmap;
 
 import java.util.List;
 import java.util.regex.Pattern;
@@ -11,7 +11,7 @@ import wumpus.util.Utils;
 /**
  * Map parser.
  */
-public class MapParser {
+public class WMapParser {
 
     private static final String VALID_SIZE_REGEX = "[0-9]+";
     private static final String VALID_HERO_COL_REGEX = "[A-Z]";
@@ -24,8 +24,8 @@ public class MapParser {
     private static int heroRow;
     private static HeroSight heroSight;
 
-    public MapParser(List<String> rows) {
-        MapParser.rows = rows;
+    public WMapParser(List<String> rows) {
+        WMapParser.rows = rows;
     }
 
     private void parseHeaderRow(String[] headerRow) throws MapParsingException {
@@ -35,36 +35,36 @@ public class MapParser {
         if (!Pattern.matches(VALID_SIZE_REGEX, headerRow[0])) {
             throw new MapParsingException("Header size value contains invalid character!");
         } else {
-            MapParser.size = Integer.parseInt(headerRow[0]);
+            WMapParser.size = Integer.parseInt(headerRow[0]);
         }
         if (!Pattern.matches(VALID_HERO_COL_REGEX, headerRow[1])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
-            MapParser.heroCol = Utils.integerFromLetter(headerRow[1]);
+            WMapParser.heroCol = Utils.integerFromLetter(headerRow[1]);
         }
         if (!Pattern.matches(VALID_HERO_ROW_REGEX, headerRow[2])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
-            MapParser.heroRow = Integer.parseInt(headerRow[2]);
+            WMapParser.heroRow = Integer.parseInt(headerRow[2]);
         }
         if (!Pattern.matches(VALID_HERO_SIGHT_REGEX, headerRow[3])) {
             throw new MapParsingException("Header hero sight value contains invalid character!");
         } else {
             switch (headerRow[3]) {
                 case "N":
-                    MapParser.heroSight = HeroSight.NORTH;
+                    WMapParser.heroSight = HeroSight.NORTH;
                     break;
                 case "S":
-                    MapParser.heroSight = HeroSight.SOUTH;
+                    WMapParser.heroSight = HeroSight.SOUTH;
                     break;
                 case "E":
-                    MapParser.heroSight = HeroSight.EAST;
+                    WMapParser.heroSight = HeroSight.EAST;
                     break;
                 case "W":
-                    MapParser.heroSight = HeroSight.WEST;
+                    WMapParser.heroSight = HeroSight.WEST;
                     break;
                 default:
-                    MapParser.heroSight = HeroSight.NONE;
+                    WMapParser.heroSight = HeroSight.NONE;
                     break;
             }
         }
@@ -72,7 +72,7 @@ public class MapParser {
     }
 
     private Cell[][] parseRows(List<String> rows) throws MapParsingException {
-        Cell[][] cells = new Cell[MapParser.size][MapParser.size];
+        Cell[][] cells = new Cell[WMapParser.size][WMapParser.size];
         //for (int i = 1; i < rows.size(); i++) {
         int i = 0;
         for (String row : rows.subList(1, rows.size())) {
@@ -92,10 +92,10 @@ public class MapParser {
     /**
      * Give back map.
      */
-    public Map getMap() throws MapParsingException {
+    public WMap getMap() throws MapParsingException {
         parseHeaderRow(rows.get(0).split(" "));
         Cell[][] cells = parseRows(rows);
-        return new Map(size, cells, HeroSight.NORTH);
+        return new WMap(size, cells, HeroSight.NORTH);
     }
 
 }

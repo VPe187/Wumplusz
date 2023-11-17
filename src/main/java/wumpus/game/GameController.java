@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
-import java.util.Scanner;
 
 import com.indvd00m.ascii.render.Render;
 import com.indvd00m.ascii.render.api.ICanvas;
@@ -16,14 +15,13 @@ import wumpus.exceptions.MapParsingException;
 import wumpus.exceptions.MapReadingException;
 import wumpus.input.InputHandler;
 import wumpus.input.InputReader;
-import wumpus.map.BufferedMapReader;
-import wumpus.map.MapParser;
-import wumpus.map.MapReader;
 import wumpus.model.Player;
-import wumpus.ui.MapRenderer;
+import wumpus.wmap.BufferedWMapReader;
+import wumpus.wmap.WMapParser;
+import wumpus.wmap.WMapReader;
 
 /**
- * Game controller class.
+ * Controll game, handle main loop and event.
  */
 public class GameController {
     static final String WORLD_INPUT_FILENAME = "wumpuszinput.txt";
@@ -39,7 +37,7 @@ public class GameController {
     }
 
     /**
-     * Start game.
+     * Start game, main loop.
      */
     public void start() {
         this.welcomeText();
@@ -58,9 +56,9 @@ public class GameController {
         InputStream inputStream = this.getClass().getResourceAsStream("/" + WORLD_INPUT_FILENAME);
         if (inputStream != null) {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            MapReader mapReader = new BufferedMapReader(reader);
-            List<String> rows = mapReader.readMap();
-            MapParser mph = new MapParser(rows);
+            WMapReader wmapReader = new BufferedWMapReader(reader);
+            List<String> rows = wmapReader.readMap();
+            WMapParser mph = new WMapParser(rows);
             this.gameState.setCurrentMap(mph.getMap());
             reader.close();
         }
@@ -84,9 +82,8 @@ public class GameController {
      * Input Player name from console.
      */
     public void inputUserName() {
-        System.out.print("Kérem adja meg a keresztnevét: ");
-        Scanner input = new Scanner(System.in);
-        String playerName = input.nextLine();
+        System.out.print("Kérem adja meg a keresztnevét ");
+        String playerName = inputReader.readInput();
         if (playerName == null || playerName.isEmpty()) {
             this.player.setName("Unnamed");
         } else {

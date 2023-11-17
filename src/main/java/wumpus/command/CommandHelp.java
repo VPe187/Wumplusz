@@ -1,13 +1,12 @@
 package wumpus.command;
 
 /**
- * Help Command.
+ * The help command allows the user to request a short description of the existing commands.
  */
 public class CommandHelp implements Command {
-
     private static final String COMMAND_HELP = "help";
-    private static final String HELP_MESSAGE = "Available commands:\n" +
-            "'HERO LEFT', 'HERO RIGT', 'MOVE', 'GIVE UP', 'SHOT', 'PLAY', 'EDIT', 'LOAD', 'EXIT', 'QUIT'";
+    private static final String HELP_MESSAGE = "Available commands: " +
+            "map, left, right, move, giveup, shot, edit, load, exit, quit";
 
     @Override
     public boolean validateCommand(String input) {

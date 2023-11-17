@@ -1,10 +1,9 @@
 package wumpus.command;
 
 /**
- * Command not exists.
+ * Default command for commands that cannot be used.
  */
 public class CommandUnknown implements Command {
-
     private static final String COMMAND_UNKNOWN_MESSAGE = "Unknown command.";
 
     @Override

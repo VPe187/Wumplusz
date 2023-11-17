@@ -1,6 +1,6 @@
 package wumpus.game;
 
-import wumpus.map.Map;
+import wumpus.wmap.WMap;
 
 /**
  * Game state class.
@@ -11,20 +11,20 @@ public class GameState {
         return new GameStateBuilder();
     }
 
-    private Map currentMap;
+    private WMap currentWMap;
     private boolean stopped;
 
-    public GameState(Map currentMap, boolean stopped) {
-        this.currentMap = currentMap;
+    public GameState(WMap currentWMap, boolean stopped) {
+        this.currentWMap = currentWMap;
         this.stopped = stopped;
     }
 
-    public Map getCurrentMap() {
-        return currentMap;
+    public WMap getCurrentMap() {
+        return currentWMap;
     }
 
-    public void setCurrentMap(Map currentMap) {
-        this.currentMap = currentMap;
+    public void setCurrentMap(WMap currentWMap) {
+        this.currentWMap = currentWMap;
     }
 
     public boolean isRunning() {
@@ -39,7 +39,7 @@ public class GameState {
      * Gamestate builder class.
      */
     public static final class GameStateBuilder {
-        private Map currentMap;
+        private WMap currentWMap;
         private boolean stopped;
 
         private GameStateBuilder() {
@@ -49,8 +49,8 @@ public class GameState {
             return new GameStateBuilder();
         }
 
-        public GameStateBuilder withCurrentMap(Map currentMap) {
-            this.currentMap = currentMap;
+        public GameStateBuilder withCurrentMap(WMap currentWMap) {
+            this.currentWMap = currentWMap;
             return this;
         }
 
@@ -60,7 +60,7 @@ public class GameState {
         }
 
         public GameState build() {
-            return new GameState(this.currentMap, this.stopped);
+            return new GameState(this.currentWMap, this.stopped);
         }
     }
 }

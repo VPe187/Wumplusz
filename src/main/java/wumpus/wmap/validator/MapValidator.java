@@ -1,11 +1,11 @@
-package wumpus.map.validator;
+package wumpus.wmap.validator;
 
 import wumpus.exceptions.MapValidationException;
-import wumpus.map.Map;
+import wumpus.wmap.WMap;
 
 /**
  * Validates the given Map.
  */
 public interface MapValidator {
-        void validate(Map map) throws MapValidationException;
+        void validate(WMap wmap) throws MapValidationException;
 }

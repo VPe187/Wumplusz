@@ -1,4 +1,4 @@
-package wumpus.map;
+package wumpus.wmap;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,10 +10,10 @@ import wumpus.exceptions.MapReadingException;
 /**
  * Buffered Map reader.
  */
-public class BufferedMapReader implements MapReader {
+public class BufferedWMapReader implements WMapReader {
     private final BufferedReader reader;
 
-    public BufferedMapReader(BufferedReader reader) {
+    public BufferedWMapReader(BufferedReader reader) {
         this.reader = reader;
     }
 

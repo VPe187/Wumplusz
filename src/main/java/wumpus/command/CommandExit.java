@@ -3,19 +3,19 @@ package wumpus.command;
 import wumpus.game.GameState;
 
 /**
- * The quit command is used to exit the game (alias for the exit command).
+ * The exit command is used to exit the game (alias for the quit command).
  */
-public class CommandQuit implements Command {
-    private static final String COMMAND_QUIT = "quit";
+public class CommandExit implements Command {
+    private static final String COMMAND_EXIT = "exit";
     private final GameState gameState;
 
-    public CommandQuit(GameState gameState) {
+    public CommandExit(GameState gameState) {
         this.gameState = gameState;
     }
 
     @Override
     public boolean validateCommand(String input) {
-        return COMMAND_QUIT.equalsIgnoreCase(input);
+        return COMMAND_EXIT.equalsIgnoreCase(input);
     }
 
     @Override
