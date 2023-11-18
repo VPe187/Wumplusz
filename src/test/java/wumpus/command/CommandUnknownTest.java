@@ -8,6 +8,9 @@ import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit test for {@link CommandUnknown}
+ */
 class CommandUnknownTest {
     private static final String USER_INPUT = "cnrej";
     private static final String UNKNOWN_COMMAND_MESSAGE = "Unknown command.";
