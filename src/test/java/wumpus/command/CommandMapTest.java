@@ -16,12 +16,10 @@ import wumpus.wmap.WMap;
 public class CommandMapTest {
     private static final String USER_INPUT = "map";
     private CommandMap underTest;
-    private GameState gameState;
 
     @BeforeEach
     public void setUp() {
-        gameState = new GameState(null, false);
-        underTest = new CommandMap(gameState);
+        underTest = new CommandMap(new GameState(null, false));
     }
 
     @Test
@@ -32,4 +30,5 @@ public class CommandMapTest {
         // then
         assertTrue(result);
     }
+
 }

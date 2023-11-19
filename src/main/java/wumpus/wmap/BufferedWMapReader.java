@@ -26,7 +26,7 @@ public class BufferedWMapReader implements WMapReader {
                 rows.add(row);
             }
         } catch (IOException e) {
-            throw new MapReadingException("Failed to read world.");
+            throw new MapReadingException("Failed to read map.");
         }
         return rows;
     }
