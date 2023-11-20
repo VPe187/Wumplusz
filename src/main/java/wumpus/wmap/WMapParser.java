@@ -34,17 +34,17 @@ public class WMapParser {
         if (!Pattern.matches(VALID_SIZE_REGEX, headerRow[0])) {
             throw new MapParsingException("Header size value contains invalid character!");
         } else {
-            WMapParser.size = Integer.parseInt(headerRow[0]);
+            size = Integer.parseInt(headerRow[0]);
         }
         if (!Pattern.matches(VALID_HERO_COL_REGEX, headerRow[1])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
-            WMapParser.heroCol = WMapTools.integerFromLetter(headerRow[1]);
+            heroCol = WMapTools.integerFromLetter(headerRow[1]);
         }
         if (!Pattern.matches(VALID_HERO_ROW_REGEX, headerRow[2])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
-            WMapParser.heroRow = Integer.parseInt(headerRow[2]);
+            heroRow = Integer.parseInt(headerRow[2]);
         }
         if (!Pattern.matches(VALID_HERO_SIGHT_REGEX, headerRow[3])) {
             throw new MapParsingException("Header hero sight value contains invalid character!");
@@ -93,7 +93,7 @@ public class WMapParser {
     public WMap getMap() throws MapParsingException {
         parseHeaderRow(rows.get(0).split(" "));
         Cell[][] cells = parseRows(rows);
-        return new WMap(size, cells, HeroSight.NORTH);
+        return new WMap(size, cells, HeroSight.NORTH, heroCol-1, heroRow);
     }
 
 }

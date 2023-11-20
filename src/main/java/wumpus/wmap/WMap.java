@@ -27,8 +27,11 @@ public class WMap {
     private int pitCells;
     private int goldCells;
     private int steps;
+    private int startCol;
+    private int startRow;
+    private boolean heroHasGold;
 
-    public WMap(int size, Cell[][] cells, HeroSight heroSight) {
+    public WMap(int size, Cell[][] cells, HeroSight heroSight, int startCol, int startRow) {
         this.size = size;
         this.cells = cells;
         this.wumpusCells = wumpusCountByWorldSize(this.size);
@@ -36,6 +39,9 @@ public class WMap {
         this.heroSight = heroSight;
         this.countElements();
         this.steps = 0;
+        this.startCol = startCol;
+        this.startRow = startRow;
+        heroHasGold = false;
     }
 
     private void countElements() {
@@ -75,6 +81,18 @@ public class WMap {
         return size;
     }
 
+    public int getStartCol() {
+        return startCol;
+    }
+
+    public int getStartRow() {
+        return startRow;
+    }
+
+    public boolean isHeroHasGold() {
+        return heroHasGold;
+    }
+
     public void setHeroSight(HeroSight heroSight) {
         this.heroSight = heroSight;
     }
@@ -85,6 +103,18 @@ public class WMap {
 
     public void setSteps(int steps) {
         this.steps = steps;
+    }
+
+    public void setStartCol(int startCol) {
+        this.startCol = startCol;
+    }
+
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
+    }
+
+    public void setHeroHasGold(boolean heroHasGold) {
+        this.heroHasGold = heroHasGold;
     }
 
     public String getCellValue(int col, int row) {
@@ -141,6 +171,8 @@ public class WMap {
         private int size;
         private Cell[][] cells;
         private HeroSight heroSight;
+        private int startCol;
+        private int startRow;
 
         private MapBuilder() {
         }
@@ -178,10 +210,26 @@ public class WMap {
         }
 
         /**
+         * Map builder withStartCol.
+         */
+        public MapBuilder withStartCol(int startCol) {
+            this.startCol = startCol;
+            return this;
+        }
+
+        /**
+         * Map builder withStartRow.
+         */
+        public MapBuilder withStartRow(int startRow) {
+            this.startRow = startRow;
+            return this;
+        }
+
+        /**
          * Map build.
          */
         public WMap build(int size, Cell[][] cells, HeroSight heroSight) {
-            return new WMap(size, cells, heroSight);
+            return new WMap(size, cells, heroSight, startCol, startRow);
         }
 
     }
