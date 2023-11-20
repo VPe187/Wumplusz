@@ -1,6 +1,4 @@
 # Wumplusz
-NYE 2023/24 I. Progtech Assigment - VPe
-
-Feladatkiírás: [NYE Progtech](https://github.com/epam-nye-cooperation/epam-nye-progtech/blob/main/assignment/wumpus.md)
-
-Felhasznált oktató anyag: [Sudoku](https://github.com/epam-nye-cooperation/epam-nye-progtech/tree/feature/2023_24/sudoku/complete/sudoku)
+NYE 2023/24 I. Progtech Assigment - VPe<br>
+Specification: [NYE Progtech](https://github.com/epam-nye-cooperation/epam-nye-progtech/blob/main/assignment/wumpus.md)<br>
+Teaching material used: [Sudoku](https://github.com/epam-nye-cooperation/epam-nye-progtech/tree/feature/2023_24/sudoku/complete/sudoku)<br>
