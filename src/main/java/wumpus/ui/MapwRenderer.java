@@ -6,8 +6,8 @@ import com.indvd00m.ascii.render.api.IContextBuilder;
 import com.indvd00m.ascii.render.api.IRender;
 import com.indvd00m.ascii.render.elements.Label;
 import com.indvd00m.ascii.render.elements.Table;
-import wumpus.util.Utils;
 import wumpus.wmap.WMap;
+import wumpus.wmap.WMapTools;
 
 /**
  * Render map to console.
@@ -26,7 +26,7 @@ public class MapwRenderer {
         builder.width((wmap.getSize() + 1) * 4 + 1).height((wmap.getSize() + 1) * 2 + 1);
         Table table = new Table(wmap.getSize() + 1, wmap.getSize() + 1);
         for (int i = 0; i < wmap.getSize(); i++) {
-            table.setElement(i + 2, 1, new Label(" " + Utils.letterFromInteger(i)), false);
+            table.setElement(i + 2, 1, new Label(" " + WMapTools.letterFromInteger(i)), false);
         }
         for (int i = 0; i < wmap.getSize(); i++) {
             for (int j = 0; j < wmap.getSize(); j++) {

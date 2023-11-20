@@ -1,11 +1,12 @@
-package wumpus.util;
+package wumpus.wmap;
 
 import java.util.Objects;
 
 /**
- * Tools for this project.
+ * Tools for WMap.
  */
-public class Utils {
+public class WMapTools {
+
     static final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     /**
@@ -20,7 +21,10 @@ public class Utils {
         return 0;
     }
 
+    /**
+     * Convert Integer to letter.
+     */
     public static String letterFromInteger(int number) {
-       return alphabet.substring(number, number + 1);
+        return alphabet.substring(number, number + 1);
     }
 }

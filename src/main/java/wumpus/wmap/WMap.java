@@ -34,11 +34,11 @@ public class WMap {
         this.wumpusCells = wumpusCountByWorldSize(this.size);
         this.arrowCount = this.wumpusCells;
         this.heroSight = heroSight;
-        this.getElementsCounts();
+        this.countElements();
         this.steps = 0;
     }
 
-    private void getElementsCounts() {
+    private void countElements() {
         this.wallCells = 0;
         this.emptyCells = 0;
         this.wumpusCells = 0;

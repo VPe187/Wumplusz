@@ -1,10 +1,10 @@
-package wumpus.util;
+package wumpus.wmap;
 
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class UtilsTest {
+public class WMapToolsTest {
     public static final String LETTER_A = "A";
     public static final int INT_A = 1;
     public static final String LETTER_B = "B";
@@ -16,7 +16,7 @@ public class UtilsTest {
     public void testIntegerFromLetterGivMatchResultFirstLetter() {
         // given
         // when
-        int $result = wumpus.util.Utils.integerFromLetter(LETTER_A);
+        int $result = WMapTools.integerFromLetter(LETTER_A);
         // then
         assertEquals($result, INT_A);
     }
@@ -25,7 +25,7 @@ public class UtilsTest {
     public void testIntegerFromLetterGivMatchResultSecondLetter() {
         // given
         // when
-        int $result = wumpus.util.Utils.integerFromLetter(LETTER_B);
+        int $result = WMapTools.integerFromLetter(LETTER_B);
         // then
         assertEquals($result, INT_B);
     }
@@ -34,7 +34,7 @@ public class UtilsTest {
     public void testIntegerFromLetterGivMatchResultLastLetter() {
         // given
         // when
-        int $result = wumpus.util.Utils.integerFromLetter(LETTER_Z);
+        int $result = WMapTools.integerFromLetter(LETTER_Z);
         // then
         assertEquals($result, INT_Z);
     }

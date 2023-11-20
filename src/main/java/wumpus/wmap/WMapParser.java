@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 import wumpus.exceptions.MapParsingException;
 import wumpus.model.Cell;
 import wumpus.model.HeroSight;
-import wumpus.util.Utils;
 
 /**
  * Map parser.
@@ -40,7 +39,7 @@ public class WMapParser {
         if (!Pattern.matches(VALID_HERO_COL_REGEX, headerRow[1])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
         } else {
-            WMapParser.heroCol = Utils.integerFromLetter(headerRow[1]);
+            WMapParser.heroCol = WMapTools.integerFromLetter(headerRow[1]);
         }
         if (!Pattern.matches(VALID_HERO_ROW_REGEX, headerRow[2])) {
             throw new MapParsingException("Header hero column value contains invalid character!");
@@ -64,7 +63,6 @@ public class WMapParser {
                     WMapParser.heroSight = HeroSight.WEST;
                     break;
                 default:
-                    WMapParser.heroSight = HeroSight.NONE;
                     break;
             }
         }

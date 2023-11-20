@@ -8,8 +8,10 @@ import java.util.List;
 import wumpus.command.Command;
 import wumpus.command.CommandExit;
 import wumpus.command.CommandHelp;
+import wumpus.command.CommandLeft;
 import wumpus.command.CommandMap;
 import wumpus.command.CommandQuit;
+import wumpus.command.CommandRight;
 import wumpus.command.CommandUnknown;
 import wumpus.exceptions.MapParsingException;
 import wumpus.exceptions.MapReadingException;
@@ -41,6 +43,8 @@ public class Main {
                 new CommandQuit(gameState),
                 new CommandExit(gameState),
                 new CommandMap(gameState),
+                new CommandLeft(gameState),
+                new CommandRight(gameState),
                 new CommandHelp(),
                 new CommandUnknown()
         );
