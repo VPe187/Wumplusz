@@ -93,7 +93,7 @@ public class WMapParser {
     public WMap getMap() throws MapParsingException {
         parseHeaderRow(rows.get(0).split(" "));
         Cell[][] cells = parseRows(rows);
-        return new WMap(size, cells, HeroSight.NORTH, heroCol-1, heroRow);
+        return new WMap(size, cells, HeroSight.NORTH, heroCol - 1, heroRow);
     }
 
 }

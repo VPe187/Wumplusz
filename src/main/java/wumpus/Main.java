@@ -10,6 +10,8 @@ import wumpus.command.CommandExit;
 import wumpus.command.CommandHelp;
 import wumpus.command.CommandLeft;
 import wumpus.command.CommandMap;
+import wumpus.command.CommandMove;
+import wumpus.command.CommandShoot;
 import wumpus.command.CommandQuit;
 import wumpus.command.CommandRight;
 import wumpus.command.CommandUnknown;
@@ -45,6 +47,8 @@ public class Main {
                 new CommandMap(gameState),
                 new CommandLeft(gameState),
                 new CommandRight(gameState),
+                new CommandMove(gameState),
+                new CommandShoot(gameState),
                 new CommandHelp(),
                 new CommandUnknown()
         );

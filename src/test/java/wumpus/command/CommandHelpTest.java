@@ -16,7 +16,7 @@ public class CommandHelpTest {
     private static final String USER_INPUT_MIXED = "hElP";
     private static final String USER_INPUT_UPPER = "HELP";
     private static final String HELP_MESSAGE = "Available commands: " +
-            "map, left, right, move, giveup, shot, edit, load, exit, quit";
+            "map, left, right, move, giveup, shoot, edit, load, exit, quit";
     private CommandHelp underTest;
     private final PrintStream standardOut = System.out;
     private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
