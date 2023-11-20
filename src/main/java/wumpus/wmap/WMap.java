@@ -77,18 +77,6 @@ public class WMap {
         }
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public int getStartCol() {
-        return startCol;
-    }
-
-    public int getStartRow() {
-        return startRow;
-    }
-
     public boolean isHeroHasGold() {
         return heroHasGold;
     }
@@ -117,8 +105,28 @@ public class WMap {
         this.heroHasGold = heroHasGold;
     }
 
+    public Cell[][] getCells() {
+        return cells;
+    }
+
+    public Cell getOneCell(int col, int row) {
+        return this.cells[col][row];
+    }
+
     public String getCellValue(int col, int row) {
         return this.cells[col][row].getValue();
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public int getStartCol() {
+        return startCol;
+    }
+
+    public int getStartRow() {
+        return startRow;
     }
 
     private int wumpusCountByWorldSize(int worldSize) {
@@ -162,6 +170,23 @@ public class WMap {
 
     public int getSteps() {
         return steps;
+    }
+
+    /*
+    *
+     */
+    /**
+     * Return map of cell which is contains Hero.
+     */
+    public Cell getHeroCell() {
+        for (int i = 0; i < this.getSize(); i++) {
+            for (int j = 0; j < this.getSize(); j++) {
+                if (this.cells[j][i].getCellValue().equals("H")) {
+                    return this.cells[j][i];
+                }
+            }
+        }
+        return null;
     }
 
     /**

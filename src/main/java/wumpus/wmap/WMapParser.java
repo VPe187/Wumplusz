@@ -71,7 +71,6 @@ public class WMapParser {
 
     private Cell[][] parseRows(List<String> rows) throws MapParsingException {
         Cell[][] cells = new Cell[WMapParser.size][WMapParser.size];
-        //for (int i = 1; i < rows.size(); i++) {
         int i = 0;
         for (String row : rows.subList(1, rows.size())) {
             if (!Pattern.matches(VALID_ROW_LETTERS, row)) {
@@ -83,7 +82,7 @@ public class WMapParser {
             }
             i++;
         }
-        cells[heroCol - 1][heroRow - 1] = new Cell(heroCol, heroRow, "H");
+        cells[heroCol - 1][heroRow - 1] = new Cell(heroCol - 1, heroRow - 1, "H");
         return cells;
     }
 
@@ -93,7 +92,7 @@ public class WMapParser {
     public WMap getMap() throws MapParsingException {
         parseHeaderRow(rows.get(0).split(" "));
         Cell[][] cells = parseRows(rows);
-        return new WMap(size, cells, HeroSight.NORTH, heroCol - 1, heroRow);
+        return new WMap(size, cells, HeroSight.NORTH, heroCol - 1, heroRow - 1);
     }
 
 }

@@ -42,9 +42,15 @@ public class MapwRenderer {
         ICanvas canvas = render.render(builder.build());
         String s = canvas.getText();
         System.out.println(s);
-        System.out.println("Start:" + WMapTools.letterFromInteger(wmap.getStartCol()) + wmap.getStartRow() +
+        System.out.println("Start:" +
+                WMapTools.letterFromInteger(wmap.getStartCol()) +
+                (wmap.getStartRow() + 1) +
                 ", Hero sight:" + wmap.getHeroSight().toString());
-        System.out.println("Arrows:" + wmap.getArrowCount() + ", Wumpuses:" + wmap.getWumpusCells() + ", Gold:" + wmap.getGoldCells());
-        System.out.println("Pits:" + wmap.getPitCells() + ", Walls:" + wmap.getWallCells() + ", Empty:" + wmap.getEmptyCells());
+        System.out.println("Arrows:" + wmap.getArrowCount() +
+                ", Wumpuses:" + wmap.getWumpusCells() +
+                ", Gold:" + wmap.getGoldCells());
+        System.out.println("Pits:" + wmap.getPitCells() + ", " +
+                "Walls:" + wmap.getWallCells() +
+                ", Empty:" + wmap.getEmptyCells());
     }
 }
