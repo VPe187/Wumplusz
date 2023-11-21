@@ -22,6 +22,7 @@ public class CommandGiveup implements Command {
     @Override
     public void process(String input) {
         gameState.setCurrentMap(gameState.getStartMap());
+        gameState.setSteps(0);
         MessagePrinter.printMessage("The map has been restored to its initial state.");
     }
 }

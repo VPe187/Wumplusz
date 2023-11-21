@@ -33,15 +33,19 @@ public class GameState {
         this.player = player;
     }
 
-    protected void countElements() {
+    /**
+     * Method count all type of cell elements.
+     */
+    public void countElements() {
         wallCells = 0;
         emptyCells = 0;
         wumpusCells = 0;
         pitCells = 0;
         goldCells = 0;
         arrowCount = 0;
-        for (int i = 0; i < getCurrentMap().getSize(); i++) {
-            for (int j = 0; j < getCurrentMap().getSize(); j++) {
+        int boardSize = getCurrentMap().getSize();
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
                 switch (getCurrentMap().getCells()[j][i].getCellValue()) {
                     case WALL:
                         wallCells++;

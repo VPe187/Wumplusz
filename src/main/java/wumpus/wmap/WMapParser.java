@@ -62,7 +62,6 @@ public class WMapParser {
                 throw new MapParsingException("Row contains invalid character!");
             } else {
                 for (int j = 0; j < row.length(); j++) {
-                    //cells[j][i] = new Cell(j, i, CellElement.valueOf(row.split("")[j]));
                     cells[j][i] = new Cell(j, i, CellElement.getByValue(row.split("")[j]));
                 }
             }
