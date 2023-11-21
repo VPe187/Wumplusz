@@ -5,6 +5,7 @@ import com.indvd00m.ascii.render.api.ICanvas;
 import com.indvd00m.ascii.render.api.IContextBuilder;
 import com.indvd00m.ascii.render.api.IRender;
 import com.indvd00m.ascii.render.elements.Label;
+import com.indvd00m.ascii.render.elements.PseudoText;
 import com.indvd00m.ascii.render.elements.Table;
 import wumpus.model.CellElement;
 import wumpus.wmap.WMap;
@@ -16,6 +17,20 @@ import wumpus.wmap.WMapTools;
 public class MapwRenderer {
 
     public MapwRenderer() {
+    }
+
+    /**
+     * Method used to print welcome text.
+     */
+    public static void welcomeText() {
+        IRender render = new Render();
+        IContextBuilder builder = render.newBuilder();
+        builder.width(60).height(14);
+        builder.element(new PseudoText("Wumplusz"));
+        ICanvas canvas = render.render(builder.build());
+        String s = canvas.getText();
+        System.out.println(s);
+        System.out.println("### NYE - Progtech Assigment 2023/2024/1 - VPe");
     }
 
     /**

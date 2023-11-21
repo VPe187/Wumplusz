@@ -6,7 +6,7 @@ import wumpus.wmap.WMapTools;
  * Cell class used to store one field in Wumpus world.
  */
 public class Cell {
-    private CellElement value;
+    private final CellElement value;
     private final int col;
     private final int row;
 
@@ -17,10 +17,6 @@ public class Cell {
     public Cell(int col, int row, CellElement value) {
         this.col = col;
         this.row = row;
-        this.value = value;
-    }
-
-    public void setCellValue(CellElement value) {
         this.value = value;
     }
 
@@ -62,11 +58,25 @@ public class Cell {
         }
 
         /**
-         * Cell builder with col, row value parameters.
+         * Cell builder with col.
          */
-        public CellBuilder withColRowValue(int col, int row, CellElement value) {
+        public CellBuilder withCol(int col) {
             this.col = col;
+            return this;
+        }
+
+        /**
+         * Cell builder with row.
+         */
+        public CellBuilder withRow(int row) {
             this.row = row;
+            return this;
+        }
+
+        /**
+         * Cell builder with value.
+         */
+        public CellBuilder withValue(CellElement value) {
             this.value = value;
             return this;
         }

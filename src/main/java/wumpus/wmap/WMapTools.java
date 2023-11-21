@@ -57,6 +57,8 @@ public class WMapTools {
      *
      * @param wmap the map ({@link WMap})
      * @param direction the direction of move ({@link HeroSight})
+     *
+     * @return targetCell as {@link Cell}
      */
     public static Cell getTargetCell(WMap wmap, HeroSight direction) {
         Cell heroCell = wmap.getHeroCell();
@@ -80,12 +82,22 @@ public class WMapTools {
      * @param targetCell the target cell ({@link Cell})
      */
     public static void moveHeroToCell(WMap wmap, Cell targetCell) {
+        int heroCol = wmap.getHeroCell().getCol();
+        int heroRow = wmap.getHeroCell().getRow();
         int targetCol = targetCell.getCol();
         int targetRow = targetCell.getRow();
-        wmap.getHeroCell().setCellValue(CellElement.EMPTY);
-        wmap.getCell(targetCol, targetRow).setCellValue(CellElement.HERO);
+        wmap.getCells()[heroCol][heroRow] = Cell.builder().withCol(targetCol).withRow(targetRow).withValue(CellElement.EMPTY).build();
+        wmap.getCells()[targetCol][targetRow] = Cell.builder().withCol(targetCol).withRow(targetRow).withValue(CellElement.HERO).build();
     }
 
+    /**
+     * Shoot event.
+     *
+     * @param wmap as {@link WMap}
+     * @param direction as {@link HeroSight}
+     *
+     * @return resultCell as {@link Cell}
+     */
     public static Cell shootEndCell(WMap wmap, HeroSight direction) {
         Cell targetCell = wmap.getHeroCell();
         boolean hit = false;
@@ -95,14 +107,43 @@ public class WMapTools {
         if (direction.equals(HeroSight.NORTH)) {
             while ((row - arrowStep) >= 0 && !hit) {
                 targetCell = wmap.getCell(col, row - arrowStep);
-                if (!targetCell.getValue().equals(CellElement.WALL) && !targetCell.getValue().equals(CellElement.WUMPUS) ) {
+                if (!targetCell.getValue().equals(CellElement.WALL) && !targetCell.getValue().equals(CellElement.WUMPUS)) {
                     arrowStep++;
                 } else {
                     hit = true;
                 }
             }
         }
-        System.out.println("HIT:" + targetCell);
+        if (direction.equals(HeroSight.SOUTH)) {
+            while ((row + arrowStep) <= wmap.getSize() && !hit) {
+                targetCell = wmap.getCell(col, row + arrowStep);
+                if (!targetCell.getValue().equals(CellElement.WALL) && !targetCell.getValue().equals(CellElement.WUMPUS)) {
+                    arrowStep++;
+                } else {
+                    hit = true;
+                }
+            }
+        }
+        if (direction.equals(HeroSight.WEST)) {
+            while ((col - arrowStep) >= 0 && !hit) {
+                targetCell = wmap.getCell(col - arrowStep, row);
+                if (!targetCell.getValue().equals(CellElement.WALL) && !targetCell.getValue().equals(CellElement.WUMPUS)) {
+                    arrowStep++;
+                } else {
+                    hit = true;
+                }
+            }
+        }
+        if (direction.equals(HeroSight.EAST)) {
+            while ((col + arrowStep) <= wmap.getSize() && !hit) {
+                targetCell = wmap.getCell(col + arrowStep, row);
+                if (!targetCell.getValue().equals(CellElement.WALL) && !targetCell.getValue().equals(CellElement.WUMPUS)) {
+                    arrowStep++;
+                } else {
+                    hit = true;
+                }
+            }
+        }
         return targetCell;
     }
 }

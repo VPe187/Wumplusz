@@ -6,16 +6,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import com.indvd00m.ascii.render.Render;
-import com.indvd00m.ascii.render.api.ICanvas;
-import com.indvd00m.ascii.render.api.IContextBuilder;
-import com.indvd00m.ascii.render.api.IRender;
-import com.indvd00m.ascii.render.elements.PseudoText;
 import wumpus.exceptions.MapParsingException;
 import wumpus.exceptions.MapReadingException;
 import wumpus.input.InputHandler;
 import wumpus.input.InputReader;
 import wumpus.model.Player;
+import wumpus.ui.MapwRenderer;
 import wumpus.wmap.BufferedWMapReader;
 import wumpus.wmap.WMapParser;
 import wumpus.wmap.WMapReader;
@@ -25,7 +21,6 @@ import wumpus.wmap.WMapReader;
  */
 public class GameController {
     static final String WORLD_INPUT_FILENAME = "wumpuszinput.txt";
-    private final Player player = new Player();
     private final GameState gameState;
     private final InputReader inputReader;
     private final InputHandler inputHandler;
@@ -40,9 +35,9 @@ public class GameController {
      * Start game, main loop.
      */
     public void start() {
-        this.welcomeText();
+        MapwRenderer.welcomeText();
         this.inputUserName();
-        System.out.println("Szia kedves " + this.player.getName() + "!");
+        System.out.println("Szia kedves " + getPlayer().getName() + "!");
         while (gameState.isRunning()) {
             String input = this.inputReader.readInput();
             inputHandler.handleInput(input);
@@ -58,24 +53,11 @@ public class GameController {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             WMapReader wmapReader = new BufferedWMapReader(reader);
             List<String> rows = wmapReader.readMap();
-            WMapParser mph = new WMapParser(rows);
-            this.gameState.setCurrentMap(WMapParser.getMap());
+            WMapParser wmapParser = new WMapParser(rows);
+            this.gameState.setCurrentMap(wmapParser.getMap());
+            this.gameState.setStartMap(wmapParser.getMap());
             reader.close();
         }
-    }
-
-    /**
-     * Method used to print welcome text.
-     */
-    public void welcomeText() {
-        IRender render = new Render();
-        IContextBuilder builder = render.newBuilder();
-        builder.width(60).height(14);
-        builder.element(new PseudoText("Wumplusz"));
-        ICanvas canvas = render.render(builder.build());
-        String s = canvas.getText();
-        System.out.println(s);
-        System.out.println("### NYE - Progtech Assigment 2023/2024/1 - VPe");
     }
 
     /**
@@ -84,15 +66,17 @@ public class GameController {
     public void inputUserName() {
         System.out.print("Kérem adja meg a keresztnevét ");
         String playerName = inputReader.readInput();
+        Player player = new Player();
         if (playerName == null || playerName.isEmpty()) {
-            this.player.setName("Unnamed");
+            player.setName("Unnamed");
         } else {
-            this.player.setName(playerName);
+            player.setName(playerName);
         }
+        this.gameState.setPlayer(player);
     }
 
     public Player getPlayer() {
-        return player;
+        return this.gameState.getPlayer();
     }
 
     public GameState getGameState() {

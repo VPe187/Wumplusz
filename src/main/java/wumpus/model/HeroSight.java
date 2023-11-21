@@ -7,14 +7,21 @@ public enum HeroSight {
     NORTH("N"), WEST("W"), SOUTH("S"), EAST("E");
     private final String sign;
 
-    /** HeroSight enums.
-     *      *
+    /**
+     * HeroSight enums.
+     *
      * @param sign as String
      */
     HeroSight(final String sign) {
         this.sign = sign;
     }
 
+    /**
+     * Give back HeroSight by value.
+     *
+     * @param sign as String
+     * @return {@link HeroSight}
+     */
     public static HeroSight getByValue(String sign) {
         for (HeroSight value : values()) {
             if (value.sign.equals(sign)) {

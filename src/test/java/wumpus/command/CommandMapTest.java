@@ -19,7 +19,7 @@ public class CommandMapTest {
 
     @BeforeEach
     public void setUp() {
-        underTest = new CommandMap(new GameState(null, false));
+        underTest = new CommandMap(new GameState(null, null, false));
     }
 
     @Test

@@ -17,7 +17,7 @@ public class CommandExitTest {
 
     @BeforeEach
     public void setUp() {
-        gameState = new GameState(null, false);
+        gameState = new GameState(null, null, false);
         underTest = new CommandExit(gameState);
     }
 
@@ -51,7 +51,7 @@ public class CommandExitTest {
     @Test
     public void testGameRunningWhenInputIsNotExit() {
         // given
-        gameState = new GameState(null, false);
+        gameState = new GameState(null, null, false);
         // when
         underTest.process(INPUT_OTHER);
         // then

@@ -7,7 +7,7 @@ import wumpus.model.HeroSight;
  * Left command, rotate hero sight to left.
  */
 public class CommandLeft implements Command {
-    private static final String COMMAND_QUIT = "left";
+    private static final String COMMAND_LEFT = "left";
     private final GameState gameState;
 
     public CommandLeft(GameState gameState) {
@@ -16,7 +16,7 @@ public class CommandLeft implements Command {
 
     @Override
     public boolean validateCommand(String input) {
-        return COMMAND_QUIT.equalsIgnoreCase(input);
+        return COMMAND_LEFT.equalsIgnoreCase(input);
     }
 
     @Override

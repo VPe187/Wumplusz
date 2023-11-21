@@ -17,17 +17,17 @@ public class WMapParser {
     private static final String VALID_HERO_ROW_REGEX = "[0-9]";
     private static final String VALID_HERO_SIGHT_REGEX = "[NSEW]";
     private static final String VALID_ROW_LETTERS = "[WUGP_]+";
-    private static List<String> rows;
-    private static int size;
-    private static int heroCol;
-    private static int heroRow;
-    private static HeroSight heroSight;
+    private final List<String> rows;
+    private int size;
+    private int heroCol;
+    private int heroRow;
+    private HeroSight heroSight;
 
     public WMapParser(List<String> rows) {
-        WMapParser.rows = rows;
+        this.rows = rows;
     }
 
-    private static void parseHeaderRow(String[] headerRow) throws MapParsingException {
+    private void parseHeaderRow(String[] headerRow) throws MapParsingException {
         if (headerRow.length != 4) {
             throw new MapParsingException("Header contains invalid number of characters!");
         }
@@ -54,8 +54,8 @@ public class WMapParser {
 
     }
 
-    private static Cell[][] parseRows(List<String> rows) throws MapParsingException {
-        Cell[][] cells = new Cell[WMapParser.size][WMapParser.size];
+    private Cell[][] parseRows(List<String> rows) throws MapParsingException {
+        Cell[][] cells = new Cell[this.size][this.size];
         int i = 0;
         for (String row : rows.subList(1, rows.size())) {
             if (!Pattern.matches(VALID_ROW_LETTERS, row)) {
@@ -75,7 +75,7 @@ public class WMapParser {
     /**
      * Give back game wmap.
      */
-    public static WMap getMap() throws MapParsingException {
+    public WMap getMap() throws MapParsingException {
         parseHeaderRow(rows.get(0).split(" "));
         Cell[][] cells = parseRows(rows);
         return WMap.builder().withSize(size).withCells(cells).withHeroSight(heroSight)

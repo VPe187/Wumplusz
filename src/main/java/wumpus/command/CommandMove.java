@@ -6,10 +6,10 @@ import wumpus.wmap.WMap;
 import wumpus.wmap.WMapTools;
 
 /**
- * Right command, rotate hero sight to right.
+ * Move command, move hero to next cell in sight.
  */
 public class CommandMove implements Command {
-    private static final String COMMAND_QUIT = "move";
+    private static final String COMMAND_MOVE = "move";
     private final GameState gameState;
 
     public CommandMove(GameState gameState) {
@@ -18,7 +18,7 @@ public class CommandMove implements Command {
 
     @Override
     public boolean validateCommand(String input) {
-        return COMMAND_QUIT.equalsIgnoreCase(input);
+        return COMMAND_MOVE.equalsIgnoreCase(input);
     }
 
     @Override

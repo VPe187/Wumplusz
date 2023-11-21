@@ -7,6 +7,7 @@ import java.util.List;
 
 import wumpus.command.Command;
 import wumpus.command.CommandExit;
+import wumpus.command.CommandGiveup;
 import wumpus.command.CommandHelp;
 import wumpus.command.CommandLeft;
 import wumpus.command.CommandMap;
@@ -40,8 +41,17 @@ public class Main {
     }
 
     private static void game(BufferedReader bufferedReader) throws MapParsingException, MapReadingException, IOException {
-        GameState gameState = GameState.builder().withCurrentMap(null).withStopped(false).build();
-        List<Command> commands = List.of(
+        GameState gameState = GameState.builder().withCurrentMap(null).withPlayer(null).withStopped(false).build();
+        InputReader inputReader = new InputReader(bufferedReader);
+        List<Command> commands = fillCommands(gameState);
+        InputHandler inputHandler = new InputHandler(commands);
+        GameController gameController = new GameController(gameState, inputReader, inputHandler);
+        gameController.readWorldFromFile();
+        gameController.start();
+    }
+
+    private static List<Command> fillCommands(GameState gameState) {
+        return List.of(
                 new CommandQuit(gameState),
                 new CommandExit(gameState),
                 new CommandMap(gameState),
@@ -49,13 +59,9 @@ public class Main {
                 new CommandRight(gameState),
                 new CommandMove(gameState),
                 new CommandShoot(gameState),
+                new CommandGiveup(gameState),
                 new CommandHelp(),
                 new CommandUnknown()
         );
-        InputReader inputReader = new InputReader(bufferedReader);
-        InputHandler inputHandler = new InputHandler(commands);
-        GameController gameController = new GameController(gameState, inputReader, inputHandler);
-        gameController.readWorldFromFile();
-        gameController.start();
     }
 }

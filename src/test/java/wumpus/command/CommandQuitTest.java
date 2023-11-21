@@ -17,7 +17,7 @@ class CommandQuitTest {
 
     @BeforeEach
     public void setUp() {
-        gameState = new GameState(null, false);
+        gameState = new GameState(null, null, false);
         underTest = new CommandQuit(gameState);
     }
 
@@ -51,7 +51,7 @@ class CommandQuitTest {
     @Test
     public void testGameRunningWhenInputIsNotQuit() {
         // given
-        gameState = new GameState(null, false);
+        gameState = new GameState(null, null, false);
         // when
         underTest.process(INPUT_OTHER);
         // then

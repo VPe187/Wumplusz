@@ -7,7 +7,7 @@ import wumpus.ui.MapwRenderer;
  * Displays a map of the current state of the game on the screen.
  */
 public class CommandMap implements Command {
-    private static final String COMMAND_PLAY = "map";
+    private static final String COMMAND_MAP = "map";
     private final GameState gameState;
 
     public CommandMap(GameState gameState) {
@@ -16,7 +16,7 @@ public class CommandMap implements Command {
 
     @Override
     public boolean validateCommand(String input) {
-        return COMMAND_PLAY.equalsIgnoreCase(input);
+        return COMMAND_MAP.equalsIgnoreCase(input);
     }
 
     @Override
