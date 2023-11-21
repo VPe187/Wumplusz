@@ -5,13 +5,13 @@ import java.util.regex.Pattern;
 
 import wumpus.exceptions.MapParsingException;
 import wumpus.model.Cell;
+import wumpus.model.CellElement;
 import wumpus.model.HeroSight;
 
 /**
  * Map parser.
  */
 public class WMapParser {
-
     private static final String VALID_SIZE_REGEX = "[0-9]+";
     private static final String VALID_HERO_COL_REGEX = "[A-Z]";
     private static final String VALID_HERO_ROW_REGEX = "[0-9]";
@@ -27,7 +27,7 @@ public class WMapParser {
         WMapParser.rows = rows;
     }
 
-    private void parseHeaderRow(String[] headerRow) throws MapParsingException {
+    private static void parseHeaderRow(String[] headerRow) throws MapParsingException {
         if (headerRow.length != 4) {
             throw new MapParsingException("Header contains invalid number of characters!");
         }
@@ -49,27 +49,12 @@ public class WMapParser {
         if (!Pattern.matches(VALID_HERO_SIGHT_REGEX, headerRow[3])) {
             throw new MapParsingException("Header hero sight value contains invalid character!");
         } else {
-            switch (headerRow[3]) {
-                case "N":
-                    WMapParser.heroSight = HeroSight.NORTH;
-                    break;
-                case "S":
-                    WMapParser.heroSight = HeroSight.SOUTH;
-                    break;
-                case "E":
-                    WMapParser.heroSight = HeroSight.EAST;
-                    break;
-                case "W":
-                    WMapParser.heroSight = HeroSight.WEST;
-                    break;
-                default:
-                    break;
-            }
+            heroSight = HeroSight.getByValue(headerRow[3]);
         }
 
     }
 
-    private Cell[][] parseRows(List<String> rows) throws MapParsingException {
+    private static Cell[][] parseRows(List<String> rows) throws MapParsingException {
         Cell[][] cells = new Cell[WMapParser.size][WMapParser.size];
         int i = 0;
         for (String row : rows.subList(1, rows.size())) {
@@ -77,22 +62,24 @@ public class WMapParser {
                 throw new MapParsingException("Row contains invalid character!");
             } else {
                 for (int j = 0; j < row.length(); j++) {
-                    cells[j][i] = new Cell(j, i, row.split("")[j]);
+                    //cells[j][i] = new Cell(j, i, CellElement.valueOf(row.split("")[j]));
+                    cells[j][i] = new Cell(j, i, CellElement.getByValue(row.split("")[j]));
                 }
             }
             i++;
         }
-        cells[heroCol - 1][heroRow - 1] = new Cell(heroCol - 1, heroRow - 1, "H");
+        cells[heroCol - 1][heroRow - 1] = new Cell(heroCol - 1, heroRow - 1, CellElement.HERO);
         return cells;
     }
 
     /**
-     * Give back map.
+     * Give back game wmap.
      */
-    public WMap getMap() throws MapParsingException {
+    public static WMap getMap() throws MapParsingException {
         parseHeaderRow(rows.get(0).split(" "));
         Cell[][] cells = parseRows(rows);
-        return new WMap(size, cells, HeroSight.NORTH, heroCol - 1, heroRow - 1);
+        return WMap.builder().withSize(size).withCells(cells).withHeroSight(heroSight)
+                .withStartCol(heroCol - 1).withStartRow(heroRow - 1).build();
     }
 
 }

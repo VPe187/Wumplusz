@@ -3,6 +3,7 @@ package wumpus.wmap;
 import java.util.Objects;
 
 import wumpus.model.Cell;
+import wumpus.model.CellElement;
 import wumpus.model.HeroSight;
 
 /**
@@ -35,12 +36,20 @@ public class WMapTools {
      * Return {@code true} / {@code false} depends on target cell values.
      */
     public static boolean canMoveDirection(WMap wmap, HeroSight direction) {
-        if ((wmap.getHeroCell().getRow() - 1) < 0 || (wmap.getHeroCell().getRow()) + 1 > wmap.getSize() || 
-                (wmap.getHeroCell().getCol() - 1) < 0 || (wmap.getHeroCell().getCol()) + 1 > wmap.getSize()) {
+        if (direction.equals(HeroSight.NORTH) && (wmap.getHeroCell().getRow() - 1) < 0) {
+            return false;
+        }
+        if (direction.equals(HeroSight.SOUTH) && (wmap.getHeroCell().getRow() + 1) > wmap.getSize()) {
+            return false;
+        }
+        if (direction.equals(HeroSight.WEST) && (wmap.getHeroCell().getCol() - 1) < 0) {
+            return false;
+        }
+        if (direction.equals(HeroSight.EAST) && (wmap.getHeroCell().getCol() + 1) > wmap.getSize()) {
             return false;
         }
         Cell targetCell = getTargetCell(wmap, direction);
-        return !targetCell.getCellValue().equals("W");
+        return !targetCell.getCellValue().equals(CellElement.WALL);
     }
 
     /**
@@ -73,7 +82,27 @@ public class WMapTools {
     public static void moveHeroToCell(WMap wmap, Cell targetCell) {
         int targetCol = targetCell.getCol();
         int targetRow = targetCell.getRow();
-        wmap.getHeroCell().setCellValue("_");
-        wmap.getOneCell(targetCol, targetRow).setCellValue("H");
+        wmap.getHeroCell().setCellValue(CellElement.EMPTY);
+        wmap.getCell(targetCol, targetRow).setCellValue(CellElement.HERO);
+    }
+
+    public static Cell shootEndCell(WMap wmap, HeroSight direction) {
+        Cell targetCell = wmap.getHeroCell();
+        boolean hit = false;
+        int col = wmap.getHeroCell().getCol();
+        int row = wmap.getHeroCell().getRow();
+        int arrowStep = 1;
+        if (direction.equals(HeroSight.NORTH)) {
+            while ((row - arrowStep) >= 0 && !hit) {
+                targetCell = wmap.getCell(col, row - arrowStep);
+                if (!targetCell.getValue().equals(CellElement.WALL) && !targetCell.getValue().equals(CellElement.WUMPUS) ) {
+                    arrowStep++;
+                } else {
+                    hit = true;
+                }
+            }
+        }
+        System.out.println("HIT:" + targetCell);
+        return targetCell;
     }
 }

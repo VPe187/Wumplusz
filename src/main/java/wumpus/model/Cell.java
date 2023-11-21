@@ -1,11 +1,12 @@
 package wumpus.model;
 
+import wumpus.wmap.WMapTools;
+
 /**
  * Cell class used to store one field in Wumpus world.
  */
 public class Cell {
-
-    private String value;
+    private CellElement value;
     private final int col;
     private final int row;
 
@@ -13,21 +14,21 @@ public class Cell {
         return new CellBuilder();
     }
 
-    public Cell(int col, int row, String value) {
+    public Cell(int col, int row, CellElement value) {
         this.col = col;
         this.row = row;
         this.value = value;
     }
 
-    public void setCellValue(String value) {
+    public void setCellValue(CellElement value) {
         this.value = value;
     }
 
-    public String getCellValue() {
+    public CellElement getCellValue() {
         return this.value;
     }
 
-    public String getValue() {
+    public CellElement getValue() {
         return value;
     }
 
@@ -39,11 +40,17 @@ public class Cell {
         return row;
     }
 
+    @Override
+    public String toString() {
+        return WMapTools.letterFromInteger(this.getCol()) + (this.getRow() + 1);
+
+    }
+
     /**
      * Builder for Cell.
      */
     public static final class CellBuilder {
-        private String value;
+        private CellElement value;
         private int col;
         private int row;
 
@@ -57,13 +64,16 @@ public class Cell {
         /**
          * Cell builder with col, row value parameters.
          */
-        public CellBuilder withColRowValue(int col, int row, String value) {
+        public CellBuilder withColRowValue(int col, int row, CellElement value) {
             this.col = col;
             this.row = row;
             this.value = value;
             return this;
         }
 
+        public Cell build() {
+            return new Cell(this.col, this.row, this.value);
+        }
     }
 
 }

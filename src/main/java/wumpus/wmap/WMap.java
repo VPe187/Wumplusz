@@ -1,17 +1,13 @@
 package wumpus.wmap;
 
 import wumpus.model.Cell;
+import wumpus.model.CellElement;
 import wumpus.model.HeroSight;
 
 /**
  * Map class.
  */
 public class WMap {
-
-    public static MapBuilder builder() {
-        return new MapBuilder();
-    }
-
     static final int MIN_WORLD_SIZE = 6;
     static final int MAX_WORLD_SIZE = 20;
     static final int WUMPUSES_EASY = 1;
@@ -19,6 +15,13 @@ public class WMap {
     static final int WUMPUSES_HARD = 3;
     private final int size;
     private final Cell[][] cells;
+
+    public static MapBuilder builder() {
+        return new MapBuilder();
+    }
+
+    private final int startCol;
+    private final int startRow;
     private HeroSight heroSight;
     private int wumpusCells;
     private int arrowCount;
@@ -27,21 +30,19 @@ public class WMap {
     private int pitCells;
     private int goldCells;
     private int steps;
-    private int startCol;
-    private int startRow;
     private boolean heroHasGold;
 
     public WMap(int size, Cell[][] cells, HeroSight heroSight, int startCol, int startRow) {
         this.size = size;
         this.cells = cells;
         this.wumpusCells = wumpusCountByWorldSize(this.size);
-        this.arrowCount = this.wumpusCells;
         this.heroSight = heroSight;
-        this.countElements();
-        this.steps = 0;
         this.startCol = startCol;
         this.startRow = startRow;
-        heroHasGold = false;
+        setSteps(0);
+        setArrowCount(this.wumpusCells);
+        setHeroHasGold(false);
+        this.countElements();
     }
 
     private void countElements() {
@@ -54,20 +55,20 @@ public class WMap {
         for (int i = 0; i < this.size; i++) {
             for (int j = 0; j < this.size; j++) {
                 switch (this.cells[j][i].getCellValue()) {
-                    case "W":
+                    case WALL:
                         this.wallCells++;
                         break;
-                    case "_":
+                    case EMPTY:
                         this.emptyCells++;
                         break;
-                    case "U":
+                    case WUMPUS:
                         this.wumpusCells++;
                         this.arrowCount++;
                         break;
-                    case "P":
+                    case PIT:
                         this.pitCells++;
                         break;
-                    case "G":
+                    case GOLD:
                         this.goldCells++;
                         break;
                     default:
@@ -93,14 +94,6 @@ public class WMap {
         this.steps = steps;
     }
 
-    public void setStartCol(int startCol) {
-        this.startCol = startCol;
-    }
-
-    public void setStartRow(int startRow) {
-        this.startRow = startRow;
-    }
-
     public void setHeroHasGold(boolean heroHasGold) {
         this.heroHasGold = heroHasGold;
     }
@@ -109,11 +102,11 @@ public class WMap {
         return cells;
     }
 
-    public Cell getOneCell(int col, int row) {
+    public Cell getCell(int col, int row) {
         return this.cells[col][row];
     }
 
-    public String getCellValue(int col, int row) {
+    public CellElement getCellValue(int col, int row) {
         return this.cells[col][row].getValue();
     }
 
@@ -172,16 +165,13 @@ public class WMap {
         return steps;
     }
 
-    /*
-    *
-     */
     /**
      * Return map of cell which is contains Hero.
      */
     public Cell getHeroCell() {
         for (int i = 0; i < this.getSize(); i++) {
             for (int j = 0; j < this.getSize(); j++) {
-                if (this.cells[j][i].getCellValue().equals("H")) {
+                if (this.cells[j][i].getCellValue().equals(CellElement.HERO)) {
                     return this.cells[j][i];
                 }
             }
@@ -253,8 +243,8 @@ public class WMap {
         /**
          * Map build.
          */
-        public WMap build(int size, Cell[][] cells, HeroSight heroSight) {
-            return new WMap(size, cells, heroSight, startCol, startRow);
+        public WMap build() {
+            return new WMap(this.size, this.cells, this.heroSight, startCol, startRow);
         }
 
     }

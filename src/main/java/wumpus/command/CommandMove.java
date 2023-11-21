@@ -29,9 +29,9 @@ public class CommandMove implements Command {
         if (!isPossible) {
             System.out.println("This move not possible because target cell contains wall.");
         } else {
-            System.out.println("The hero has just moved to " +
-                    WMapTools.letterFromInteger(targetCell.getCol()) + (targetCell.getRow() + 1)  + " field.");
             WMapTools.moveHeroToCell(wmap, targetCell);
+            wmap.setSteps(wmap.getSteps() + 1);
+            System.out.println("The hero has just moved to " + targetCell + " field.");
         }
     }
 }

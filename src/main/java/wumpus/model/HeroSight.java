@@ -4,15 +4,31 @@ package wumpus.model;
  * Hero sights.
  */
 public enum HeroSight {
-    NORTH, WEST, SOUTH, EAST;
+    NORTH("N"), WEST("W"), SOUTH("S"), EAST("E");
+    private final String sign;
 
-    private static final HeroSight[] heroValues = values();
+    /** HeroSight enums.
+     *      *
+     * @param sign as String
+     */
+    HeroSight(final String sign) {
+        this.sign = sign;
+    }
+
+    public static HeroSight getByValue(String sign) {
+        for (HeroSight value : values()) {
+            if (value.sign.equals(sign)) {
+                return value;
+            }
+        }
+        return null;
+    }
 
     public HeroSight left() {
-        return heroValues[(this.ordinal() + 1) % heroValues.length];
+        return values()[(this.ordinal() + 1) % values().length];
     }
 
     public HeroSight right() {
-        return heroValues[(this.ordinal() - 1 + heroValues.length) % heroValues.length];
+        return values()[(this.ordinal() - 1 + values().length) % values().length];
     }
 }

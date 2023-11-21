@@ -40,7 +40,7 @@ public class Main {
     }
 
     private static void game(BufferedReader bufferedReader) throws MapParsingException, MapReadingException, IOException {
-        GameState gameState = new GameState(null, false);
+        GameState gameState = GameState.builder().withCurrentMap(null).withStopped(false).build();
         List<Command> commands = List.of(
                 new CommandQuit(gameState),
                 new CommandExit(gameState),

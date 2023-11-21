@@ -59,7 +59,7 @@ public class GameController {
             WMapReader wmapReader = new BufferedWMapReader(reader);
             List<String> rows = wmapReader.readMap();
             WMapParser mph = new WMapParser(rows);
-            this.gameState.setCurrentMap(mph.getMap());
+            this.gameState.setCurrentMap(WMapParser.getMap());
             reader.close();
         }
     }

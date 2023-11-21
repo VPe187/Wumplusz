@@ -6,6 +6,7 @@ import com.indvd00m.ascii.render.api.IContextBuilder;
 import com.indvd00m.ascii.render.api.IRender;
 import com.indvd00m.ascii.render.elements.Label;
 import com.indvd00m.ascii.render.elements.Table;
+import wumpus.model.CellElement;
 import wumpus.wmap.WMap;
 import wumpus.wmap.WMapTools;
 
@@ -31,7 +32,7 @@ public class MapwRenderer {
         for (int i = 0; i < wmap.getSize(); i++) {
             for (int j = 0; j < wmap.getSize(); j++) {
                 table.setElement(1, j + 2, new Label(" " + (j + 1)), false);
-                if (wmap.getCellValue(j, i).equalsIgnoreCase("G") || wmap.getCellValue(j, i).equalsIgnoreCase("H")) {
+                if (wmap.getCellValue(j, i).equals(CellElement.GOLD) || wmap.getCellValue(j, i).equals(CellElement.HERO)) {
                     table.setElement(j + 2, i + 2, new Label(" " + wmap.getCellValue(j, i)), true);
                 } else {
                     table.setElement(j + 2, i + 2, new Label(" " + wmap.getCellValue(j, i)));
@@ -45,7 +46,8 @@ public class MapwRenderer {
         System.out.println("Start:" +
                 WMapTools.letterFromInteger(wmap.getStartCol()) +
                 (wmap.getStartRow() + 1) +
-                ", Hero sight:" + wmap.getHeroSight().toString());
+                ", Sight:" + wmap.getHeroSight().toString() +
+                ", Steps:" + wmap.getSteps());
         System.out.println("Arrows:" + wmap.getArrowCount() +
                 ", Wumpuses:" + wmap.getWumpusCells() +
                 ", Gold:" + wmap.getGoldCells());
