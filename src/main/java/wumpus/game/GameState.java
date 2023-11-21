@@ -1,5 +1,6 @@
 package wumpus.game;
 
+import wumpus.model.Cell;
 import wumpus.model.Player;
 import wumpus.wmap.WMap;
 
@@ -17,6 +18,8 @@ public class GameState {
     private Player player;
     private boolean stopped;
     private boolean heroDead;
+    private boolean heroHasGold;
+    private boolean heroArrivedStart;
 
     public GameState(WMap currentWMap, Player player, boolean stopped) {
         this.currentWMap = currentWMap;
@@ -36,6 +39,18 @@ public class GameState {
         return player;
     }
 
+    public boolean isHeroAlive() {
+        return !heroDead;
+    }
+
+    public boolean isHeroHasGold() {
+        return heroHasGold;
+    }
+
+    public boolean isHeroArrivedStart() {
+        return heroArrivedStart;
+    }
+
     public void setCurrentMap(WMap currentWMap) {
         this.currentWMap = currentWMap;
     }
@@ -48,12 +63,34 @@ public class GameState {
         this.player = player;
     }
 
+    public void setHeroDead(boolean heroDead) {
+        this.heroDead = heroDead;
+    }
+
+    public void setHeroHasGold(boolean heroHasGold) {
+        this.heroHasGold = heroHasGold;
+    }
+
+    public void setHeroArrivedStart(boolean heroArrivedStart) {
+        this.heroArrivedStart = heroArrivedStart;
+    }
+
     public boolean isRunning() {
         return !this.stopped;
     }
 
     public void setStopped(boolean stopped) {
         this.stopped = stopped;
+    }
+
+    /**
+     * If Hero has gold, and position is start position, hero won.
+     */
+    public boolean checkHeroWon() {
+        Cell heroCell = getCurrentMap().getHeroCell();
+        this.heroArrivedStart = currentWMap.getStartCol() == heroCell.getCol() &&
+                currentWMap.getStartRow() == heroCell.getRow() && heroHasGold;
+        return this.heroArrivedStart;
     }
 
     /**

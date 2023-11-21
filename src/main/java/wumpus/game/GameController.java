@@ -38,7 +38,8 @@ public class GameController {
         MapwRenderer.welcomeText();
         this.inputUserName();
         System.out.println("Szia kedves " + getPlayer().getName() + "!");
-        while (gameState.isRunning()) {
+        System.out.println("A játékban használható parancsokról a 'help' paranccsal kaphatsz információt.");
+        while (gameState.isRunning() && gameState.isHeroAlive()) {
             String input = this.inputReader.readInput();
             inputHandler.handleInput(input);
         }

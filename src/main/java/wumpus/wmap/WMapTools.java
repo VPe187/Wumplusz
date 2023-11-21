@@ -35,21 +35,27 @@ public class WMapTools {
     /**
      * Return {@code true} / {@code false} depends on target cell values.
      */
-    public static boolean canMoveDirection(WMap wmap, HeroSight direction) {
-        if (direction.equals(HeroSight.NORTH) && (wmap.getHeroCell().getRow() - 1) < 0) {
-            return false;
+    public static Cell canMoveDirection(WMap wmap, HeroSight direction) {
+        Cell heroCell = wmap.getHeroCell();
+        if (direction.equals(HeroSight.NORTH) && (heroCell.getRow() - 1) < 0) {
+            System.out.println("N");
+            return null;
         }
-        if (direction.equals(HeroSight.SOUTH) && (wmap.getHeroCell().getRow() + 1) > wmap.getSize()) {
-            return false;
+        if (direction.equals(HeroSight.SOUTH) && (heroCell.getRow() + 1) > (wmap.getSize() - 1)) {
+            return null;
         }
-        if (direction.equals(HeroSight.WEST) && (wmap.getHeroCell().getCol() - 1) < 0) {
-            return false;
+        if (direction.equals(HeroSight.WEST) && (heroCell.getCol() - 1) < 0) {
+            return null;
         }
-        if (direction.equals(HeroSight.EAST) && (wmap.getHeroCell().getCol() + 1) > wmap.getSize()) {
-            return false;
+        if (direction.equals(HeroSight.EAST) && (heroCell.getCol() + 1) > (wmap.getSize() - 1)) {
+            return null;
         }
         Cell targetCell = getTargetCell(wmap, direction);
-        return !targetCell.getCellValue().equals(CellElement.WALL);
+        if (!targetCell.getCellValue().equals(CellElement.WALL)) {
+            return targetCell;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -62,17 +68,12 @@ public class WMapTools {
      */
     public static Cell getTargetCell(WMap wmap, HeroSight direction) {
         Cell heroCell = wmap.getHeroCell();
-        Cell targetCell = null;
-        if (direction.equals(HeroSight.NORTH)) {
-            targetCell = wmap.getCells()[heroCell.getCol()][heroCell.getRow() - 1];
-        } else if (direction.equals(HeroSight.SOUTH)) {
-            targetCell = wmap.getCells()[heroCell.getCol()][heroCell.getRow() + 1];
-        } else if (direction.equals(HeroSight.WEST)) {
-            targetCell = wmap.getCells()[heroCell.getCol() - 1][heroCell.getRow()];
-        } else if (direction.equals(HeroSight.EAST)) {
-            targetCell = wmap.getCells()[heroCell.getCol() + 1][heroCell.getRow()];
-        }
-        return targetCell;
+        return switch (direction) {
+            case NORTH -> wmap.getCells()[heroCell.getCol()][heroCell.getRow() - 1];
+            case SOUTH -> wmap.getCells()[heroCell.getCol()][heroCell.getRow() + 1];
+            case WEST -> wmap.getCells()[heroCell.getCol() - 1][heroCell.getRow()];
+            case EAST -> wmap.getCells()[heroCell.getCol() + 1][heroCell.getRow()];
+        };
     }
 
     /**
@@ -86,7 +87,7 @@ public class WMapTools {
         int heroRow = wmap.getHeroCell().getRow();
         int targetCol = targetCell.getCol();
         int targetRow = targetCell.getRow();
-        wmap.getCells()[heroCol][heroRow] = Cell.builder().withCol(targetCol).withRow(targetRow).withValue(CellElement.EMPTY).build();
+        wmap.getCells()[heroCol][heroRow] = Cell.builder().withCol(heroCol).withRow(heroRow).withValue(CellElement.EMPTY).build();
         wmap.getCells()[targetCol][targetRow] = Cell.builder().withCol(targetCol).withRow(targetRow).withValue(CellElement.HERO).build();
     }
 

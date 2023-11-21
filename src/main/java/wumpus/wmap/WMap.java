@@ -30,7 +30,6 @@ public class WMap {
     private int pitCells;
     private int goldCells;
     private int steps;
-    private boolean heroHasGold;
 
     public WMap(int size, Cell[][] cells, HeroSight heroSight, int startCol, int startRow) {
         this.size = size;
@@ -41,7 +40,6 @@ public class WMap {
         this.startRow = startRow;
         setSteps(0);
         setArrowCount(this.wumpusCells);
-        setHeroHasGold(false);
         this.countElements();
     }
 
@@ -78,10 +76,6 @@ public class WMap {
         }
     }
 
-    public boolean isHeroHasGold() {
-        return heroHasGold;
-    }
-
     public void setHeroSight(HeroSight heroSight) {
         this.heroSight = heroSight;
     }
@@ -94,9 +88,7 @@ public class WMap {
         this.steps = steps;
     }
 
-    public void setHeroHasGold(boolean heroHasGold) {
-        this.heroHasGold = heroHasGold;
-    }
+
 
     public Cell[][] getCells() {
         return cells;
@@ -163,6 +155,15 @@ public class WMap {
 
     public int getSteps() {
         return steps;
+    }
+
+    /**
+     * Decreases the number of arrows.
+     */
+    public void looseArrow() {
+        if (arrowCount > 0) {
+            this.arrowCount--;
+        }
     }
 
     /**
