@@ -27,21 +27,21 @@ public class CommandShoot implements Command {
     @Override
     public void process(String input) {
         WMap wmap = gameState.getCurrentMap();
-        if (wmap.getArrowCount() > 0) {
-            wmap.setArrowCount(wmap.getArrowCount() - 1);
+        if (gameState.getArrowCount() > 0) {
+            gameState.looseArrow();
             HeroSight direction = wmap.getHeroSight();
             Cell endCell = WMapTools.shootEndCell(wmap, direction);
             if (endCell.getValue().equals(CellElement.WUMPUS)) {
                 wmap.getCells()[endCell.getCol()][endCell.getRow()] = Cell.builder().withCol(endCell.getCol())
                         .withRow(endCell.getRow()).withValue(CellElement.EMPTY).build();
                 MessagePrinter.printMessage("It was a WUMPUS on %s. The Number of arrows left %d.",
-                        endCell, wmap.getArrowCount());
+                        endCell, gameState.getArrowCount());
             }
             if (endCell.getValue().equals(CellElement.WALL)) {
                 MessagePrinter.printMessage("It was a WALL. The arrow has fallen on the %s field. The Number of arrows left %d.",
-                        endCell, wmap.getArrowCount());
+                        endCell, gameState.getArrowCount());
             }
-        } else if (wmap.getArrowCount() <= 0) {
+        } else if (gameState.getArrowCount() <= 0) {
             MessagePrinter.printMessage("Unfortunately, the hero has no more arrows.%n");
         }
     }

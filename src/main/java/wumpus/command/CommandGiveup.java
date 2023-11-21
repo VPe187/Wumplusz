@@ -1,12 +1,7 @@
 package wumpus.command;
 
-import wumpus.Main;
-import wumpus.exceptions.MapParsingException;
-import wumpus.exceptions.MapReadingException;
-import wumpus.game.GameController;
 import wumpus.game.GameState;
 import wumpus.ui.MessagePrinter;
-
 
 /**
  * Giveup command, reset the map to inital state.

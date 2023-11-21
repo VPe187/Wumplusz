@@ -7,6 +7,7 @@ import com.indvd00m.ascii.render.api.IRender;
 import com.indvd00m.ascii.render.elements.Label;
 import com.indvd00m.ascii.render.elements.PseudoText;
 import com.indvd00m.ascii.render.elements.Table;
+import wumpus.game.GameState;
 import wumpus.model.CellElement;
 import wumpus.wmap.WMap;
 import wumpus.wmap.WMapTools;
@@ -36,7 +37,8 @@ public class MapwRenderer {
     /**
      * Method used to render map with ASCII-renderer.
      */
-    public static void render(WMap wmap) {
+    public static void render(GameState gameState) {
+        WMap wmap = gameState.getCurrentMap();
         IRender render = new Render();
         IContextBuilder builder = render.newBuilder();
         builder.width((wmap.getSize() + 1) * 4 + 1).height((wmap.getSize() + 1) * 2 + 1);
@@ -62,12 +64,12 @@ public class MapwRenderer {
                 WMapTools.letterFromInteger(wmap.getStartCol()) +
                 (wmap.getStartRow() + 1) +
                 ", Sight:" + wmap.getHeroSight().toString() +
-                ", Steps:" + wmap.getSteps());
-        System.out.println("Arrows:" + wmap.getArrowCount() +
-                ", Wumpuses:" + wmap.getWumpusCells() +
-                ", Gold:" + wmap.getGoldCells());
-        System.out.println("Pits:" + wmap.getPitCells() + ", " +
-                "Walls:" + wmap.getWallCells() +
-                ", Empty:" + wmap.getEmptyCells());
+                ", Steps:" + gameState.getSteps());
+        System.out.println("Arrows:" + gameState.getArrowCount() +
+                ", Wumpuses:" + gameState.getWumpusCells() +
+                ", Gold:" + gameState.getGoldCells());
+        System.out.println("Pits:" + gameState.getPitCells() + ", " +
+                "Walls:" + gameState.getWallCells() +
+                ", Empty:" + gameState.getEmptyCells());
     }
 }

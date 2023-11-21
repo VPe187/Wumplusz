@@ -42,6 +42,7 @@ public class GameController {
         while (gameState.isRunning() && gameState.isHeroAlive()) {
             String input = this.inputReader.readInput();
             inputHandler.handleInput(input);
+            gameState.countElements();
         }
     }
 
@@ -59,6 +60,7 @@ public class GameController {
             this.gameState.setStartMap(wmapParser.getMap());
             reader.close();
         }
+        this.gameState.countElements();
     }
 
     /**

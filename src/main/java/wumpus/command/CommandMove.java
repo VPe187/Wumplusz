@@ -29,8 +29,8 @@ public class CommandMove implements Command {
         if (targetCell == null) {
             System.out.println("This move not possible because target cell contains wall.");
         } else {
+            gameState.setSteps(gameState.getSteps() + 1);
             WMapTools.moveHeroToCell(wmap, targetCell);
-            wmap.setSteps(wmap.getSteps() + 1);
             if (targetCell.getValue().equals(CellElement.WUMPUS)) {
                 System.out.println("Your hero met a WUMPUS and died.");
                 gameState.setHeroDead(true);
@@ -39,7 +39,7 @@ public class CommandMove implements Command {
                 gameState.setHeroHasGold(true);
             } else if (targetCell.getValue().equals(CellElement.PIT)) {
                 System.out.println("Your hero has fallen into the pit and lost 1 arrow.");
-                gameState.getCurrentMap().looseArrow();
+                gameState.looseArrow();
             } else {
                 System.out.println("The hero has just moved to " + targetCell + " field.");
                 if (gameState.checkHeroWon()) {

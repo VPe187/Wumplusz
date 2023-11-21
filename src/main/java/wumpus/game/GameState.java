@@ -19,12 +19,60 @@ public class GameState {
     private boolean stopped;
     private boolean heroDead;
     private boolean heroHasGold;
-    private boolean heroArrivedStart;
+    private int arrowCount;
+    private int wumpusCells;
+    private int emptyCells;
+    private int wallCells;
+    private int pitCells;
+    private int goldCells;
+    private int steps;
 
     public GameState(WMap currentWMap, Player player, boolean stopped) {
         this.currentWMap = currentWMap;
         this.stopped = stopped;
         this.player = player;
+    }
+
+    protected void countElements() {
+        wallCells = 0;
+        emptyCells = 0;
+        wumpusCells = 0;
+        pitCells = 0;
+        goldCells = 0;
+        arrowCount = 0;
+        for (int i = 0; i < getCurrentMap().getSize(); i++) {
+            for (int j = 0; j < getCurrentMap().getSize(); j++) {
+                switch (getCurrentMap().getCells()[j][i].getCellValue()) {
+                    case WALL:
+                        wallCells++;
+                        break;
+                    case EMPTY:
+                        emptyCells++;
+                        break;
+                    case WUMPUS:
+                        wumpusCells++;
+                        arrowCount++;
+                        break;
+                    case PIT:
+                        pitCells++;
+                        break;
+                    case GOLD:
+                        goldCells++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+    }
+
+    /**
+     * Decreases the number of arrows.
+     */
+    public void looseArrow() {
+        if (arrowCount > 0) {
+            arrowCount--;
+        }
     }
 
     public WMap getCurrentMap() {
@@ -39,16 +87,40 @@ public class GameState {
         return player;
     }
 
+    public int getWumpusCells() {
+        return wumpusCells;
+    }
+
+    public int getArrowCount() {
+        return arrowCount;
+    }
+
+    public int getEmptyCells() {
+        return emptyCells;
+    }
+
+    public int getWallCells() {
+        return wallCells;
+    }
+
+    public int getPitCells() {
+        return pitCells;
+    }
+
+    public int getGoldCells() {
+        return goldCells;
+    }
+
+    public int getSteps() {
+        return steps;
+    }
+
     public boolean isHeroAlive() {
         return !heroDead;
     }
 
-    public boolean isHeroHasGold() {
-        return heroHasGold;
-    }
-
-    public boolean isHeroArrivedStart() {
-        return heroArrivedStart;
+    public void setSteps(int steps) {
+        this.steps = steps;
     }
 
     public void setCurrentMap(WMap currentWMap) {
@@ -71,10 +143,6 @@ public class GameState {
         this.heroHasGold = heroHasGold;
     }
 
-    public void setHeroArrivedStart(boolean heroArrivedStart) {
-        this.heroArrivedStart = heroArrivedStart;
-    }
-
     public boolean isRunning() {
         return !this.stopped;
     }
@@ -88,9 +156,7 @@ public class GameState {
      */
     public boolean checkHeroWon() {
         Cell heroCell = getCurrentMap().getHeroCell();
-        this.heroArrivedStart = currentWMap.getStartCol() == heroCell.getCol() &&
-                currentWMap.getStartRow() == heroCell.getRow() && heroHasGold;
-        return this.heroArrivedStart;
+        return currentWMap.getStartCol() == heroCell.getCol() && currentWMap.getStartRow() == heroCell.getRow() && heroHasGold;
     }
 
     /**
@@ -98,7 +164,6 @@ public class GameState {
      */
     public static final class GameStateBuilder {
         private WMap currentWMap;
-        private WMap startMap;
         private Player player;
         private boolean stopped;
 

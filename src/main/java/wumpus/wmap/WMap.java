@@ -23,83 +23,30 @@ public class WMap {
     private final int startCol;
     private final int startRow;
     private HeroSight heroSight;
-    private int wumpusCells;
-    private int arrowCount;
-    private int emptyCells;
-    private int wallCells;
-    private int pitCells;
-    private int goldCells;
-    private int steps;
 
     public WMap(int size, Cell[][] cells, HeroSight heroSight, int startCol, int startRow) {
         this.size = size;
         this.cells = cells;
-        this.wumpusCells = wumpusCountByWorldSize(this.size);
         this.heroSight = heroSight;
         this.startCol = startCol;
         this.startRow = startRow;
-        setSteps(0);
-        setArrowCount(this.wumpusCells);
-        this.countElements();
-    }
-
-    private void countElements() {
-        this.wallCells = 0;
-        this.emptyCells = 0;
-        this.wumpusCells = 0;
-        this.pitCells = 0;
-        this.goldCells = 0;
-        this.arrowCount = 0;
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
-                switch (this.cells[j][i].getCellValue()) {
-                    case WALL:
-                        this.wallCells++;
-                        break;
-                    case EMPTY:
-                        this.emptyCells++;
-                        break;
-                    case WUMPUS:
-                        this.wumpusCells++;
-                        this.arrowCount++;
-                        break;
-                    case PIT:
-                        this.pitCells++;
-                        break;
-                    case GOLD:
-                        this.goldCells++;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
+        int wumpusCount = wumpusCountByWorldSize(size);
     }
 
     public void setHeroSight(HeroSight heroSight) {
         this.heroSight = heroSight;
     }
 
-    public void setArrowCount(int arrowCount) {
-        this.arrowCount = arrowCount;
-    }
-
-    public void setSteps(int steps) {
-        this.steps = steps;
-    }
-
-
-
     public Cell[][] getCells() {
         return cells;
     }
 
     public Cell getCell(int col, int row) {
-        return this.cells[col][row];
+        return cells[col][row];
     }
 
     public CellElement getCellValue(int col, int row) {
-        return this.cells[col][row].getValue();
+        return cells[col][row].getValue();
     }
 
     public int getSize() {
@@ -129,51 +76,14 @@ public class WMap {
         return heroSight;
     }
 
-    public int getArrowCount() {
-        return arrowCount;
-    }
-
-    public int getWumpusCells() {
-        return wumpusCells;
-    }
-
-    public int getEmptyCells() {
-        return emptyCells;
-    }
-
-    public int getWallCells() {
-        return wallCells;
-    }
-
-    public int getPitCells() {
-        return pitCells;
-    }
-
-    public int getGoldCells() {
-        return goldCells;
-    }
-
-    public int getSteps() {
-        return steps;
-    }
-
-    /**
-     * Decreases the number of arrows.
-     */
-    public void looseArrow() {
-        if (arrowCount > 0) {
-            this.arrowCount--;
-        }
-    }
-
     /**
      * Return map of cell which is contains Hero.
      */
     public Cell getHeroCell() {
-        for (int i = 0; i < this.getSize(); i++) {
-            for (int j = 0; j < this.getSize(); j++) {
-                if (this.cells[j][i].getCellValue().equals(CellElement.HERO)) {
-                    return this.cells[j][i];
+        for (int i = 0; i < getSize(); i++) {
+            for (int j = 0; j < getSize(); j++) {
+                if (cells[j][i].getCellValue().equals(CellElement.HERO)) {
+                    return cells[j][i];
                 }
             }
         }
@@ -247,7 +157,6 @@ public class WMap {
         public WMap build() {
             return new WMap(this.size, this.cells, this.heroSight, startCol, startRow);
         }
-
     }
 }
 
