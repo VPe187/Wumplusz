@@ -22,5 +22,6 @@ public class CommandMap implements Command {
     @Override
     public void process(String input) {
         MapwRenderer.render(this.gameState);
+        MapwRenderer.renderElements(this.gameState);
     }
 }

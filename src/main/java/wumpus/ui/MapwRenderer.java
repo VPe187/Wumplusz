@@ -60,6 +60,15 @@ public class MapwRenderer {
         ICanvas canvas = render.render(builder.build());
         String s = canvas.getText();
         System.out.println(s);
+    }
+
+    /**
+     * Render CellElements counts.
+     *
+     * @param gameState as GameState
+     */
+    public static void renderElements(GameState gameState) {
+        WMap wmap = gameState.getCurrentMap();
         System.out.println("Start:" +
                 WMapTools.letterFromInteger(wmap.getStartCol()) +
                 (wmap.getStartRow() + 1) +
