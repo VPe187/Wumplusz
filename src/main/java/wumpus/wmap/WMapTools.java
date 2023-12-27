@@ -38,7 +38,6 @@ public class WMapTools {
     public static Cell canMoveDirection(WMap wmap, HeroSight direction) {
         Cell heroCell = wmap.getHeroCell();
         if (direction.equals(HeroSight.NORTH) && (heroCell.getRow() - 1) < 0) {
-            System.out.println("N");
             return null;
         }
         if (direction.equals(HeroSight.SOUTH) && (heroCell.getRow() + 1) > (wmap.getSize() - 1)) {
